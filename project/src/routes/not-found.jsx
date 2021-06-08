@@ -1,5 +1,5 @@
 import React from 'react';
-import FooterLogo from '../parts/footer-logo';
+import FooterLogo from '../components/footer-logo';
 
 function NotFoundScreen(props) {
   return (

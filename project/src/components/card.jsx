@@ -1,15 +1,18 @@
 import React from 'react';
+import {Link, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { AppRoute } from '../constants';
 function Card(props) {
-  const {isPremium, imgUrl, price, isBookmark, rating, title, type } = props;
+  const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = props;
+  const history = useHistory();
+
   return (
-    <article className="cities__place-card place-card">
+    <article onClick={() => history.push(AppRoute.ROOM)} id={id} className="cities__place-card place-card">
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '' }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/">
-          <img className="place-card__image" src={imgUrl} width={260} height={200} alt="Place" />
-        </a>
+        <Link to="/offer/">
+          <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place" />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -17,7 +20,7 @@ function Card(props) {
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className={isBookmark ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} type="button">
+          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} type="button">
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>
@@ -26,7 +29,7 @@ function Card(props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating}%`}}/>
+            <span style={{width: `${rating * 20}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -42,10 +45,11 @@ function Card(props) {
 export default Card;
 
 Card.propTypes = {
+  id: PropTypes.number.isRequired,
   isPremium: PropTypes.bool.isRequired,
-  imgUrl: PropTypes.string.isRequired,
+  previewImage: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  isBookmark: PropTypes.bool.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,

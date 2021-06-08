@@ -1,8 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/app/app';
 
-const Cards = [
+export const Cards = [
   {
     isPremium: true,
     imgUrl: 'img/apartment-01.jpg',
@@ -43,15 +40,9 @@ const Cards = [
     isPremium: false,
     imgUrl: 'img/room.jpg',
     price: 80,
-    isBookmark: false,
+    isBookmark: true,
     rating: 80,
-    title: 'Wood and stone place',
+    title: 'Scandinavian architecture',
     type: 'Private room',
   },
 ];
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App cards={Cards}/>
-  </React.StrictMode>,
-  document.getElementById('root'));

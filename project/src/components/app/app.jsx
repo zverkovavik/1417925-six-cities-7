@@ -1,16 +1,17 @@
 import React from 'react';
-import MainPage from '../main-page/main-page';
-import PropTypes from 'prop-types';
+import MainPage from '../../routes/main-page';
+import cardsProp from '../../mocks/offers-prop';
+import reviewsProp from '../../mocks/reviews-prop';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../constants';
-import Login from '../pages/login';
-import Favorites from '../pages/favorites';
-import Room from '../pages/room';
-import NotFoundScreen from '../pages/not-found';
+import Login from '../../routes/login';
+import Favorites from '../../routes/favorites';
+import Room from '../../routes/room';
+import NotFoundScreen from '../../routes/not-found';
 
 
 function App(props) {
-  const {cards} = props;
+  const { cards, reviews } = props;
   return (
     <BrowserRouter>
       <Switch>
@@ -21,10 +22,10 @@ function App(props) {
           <Login />
         </Route>
         <Route  exact path={AppRoute.FAVORITES}>
-          <Favorites />
+          <Favorites cards={cards} />
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <Room cards={cards}/>
+          <Room cards={cards} reviews={reviews} />
         </Route>
         <Route>
           <NotFoundScreen />
@@ -35,17 +36,8 @@ function App(props) {
 }
 
 App.propTypes = {
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      isPremium: PropTypes.bool.isRequired,
-      imgUrl: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      isBookmark: PropTypes.bool.isRequired,
-      rating: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  cards: cardsProp,
+  reviews: reviewsProp,
 };
 
 export default App;

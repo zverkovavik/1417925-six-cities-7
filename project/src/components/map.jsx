@@ -3,12 +3,13 @@ import 'leaflet/dist/leaflet.css';
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useMap from '../useMap';
+import { connect } from 'react-redux';
 
 const FIRST_ARRAY_ELEMENT = 0;
 const MARKER_URL = 'img/pin.svg';
 
 function Map(props) {
-  const { cards } = props;
+  const { adsList, cards } = props;
 
   const city = cards[FIRST_ARRAY_ELEMENT];
 
@@ -24,7 +25,12 @@ function Map(props) {
 
   useEffect(() => {
     if (map) {
-      cards.forEach((ad) => {
+      map.eachLayer((layer) => {
+        if (layer.getElement) {
+          layer.remove();
+        }
+      });
+      adsList.forEach((ad) => {
         leaflet
           .marker({
             lat: ad.location.latitude,
@@ -35,14 +41,19 @@ function Map(props) {
           .addTo(map);
       });
     }
-  }, [map, cards, icon]);
+  }, [map, adsList, icon]);
 
   return (
-    <div id="map" style= {{ height: '100%' }} ref={mapRef}></div>
+    <div id="map" style={{ height: '100%' }} ref={mapRef}></div>
   );
 }
 
+const mapStateToProps = (state) => ({
+  adsList: state.adsList,
+});
+
 Map.propTypes = {
+  adsList: PropTypes.array.isRequired,
   cards: PropTypes.arrayOf(
     PropTypes.shape({
       location: PropTypes.shape({
@@ -54,4 +65,5 @@ Map.propTypes = {
   ),
 };
 
-export default Map;
+export {Map};
+export default connect(mapStateToProps, null)(Map);

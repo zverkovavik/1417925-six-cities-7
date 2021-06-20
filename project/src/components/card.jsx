@@ -1,16 +1,16 @@
-import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import React, { useState }  from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { AppRoute } from '../constants';
+
 function Card(props) {
+  const [ activeCard, setActiveCard ] = useState(null);
   const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = props;
-  const history = useHistory();
 
   return (
-    <article onClick={() => history.push(AppRoute.ROOM)} id={id} className="cities__place-card place-card">
+    <article onMouseOver={() => setActiveCard(id)} className="cities__place-card place-card">
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '' }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="/offer/">
+        <Link to={`/offer/${activeCard}`}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place" />
         </Link>
       </div>

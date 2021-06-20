@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from '../components/card';
 import cardsProp from '../mocks/offers-prop';
 function OffersList(props) {
-  const [ activeCard, setActiveCard ] = useState(null);
+
   const {cards} = props;
   return (
     <section className="cities__places places">
@@ -23,7 +23,7 @@ function OffersList(props) {
           <li className="places__option" tabIndex={0}>Top rated first</li>
         </ul>
       </form>
-      <div onMouseMove={(evt) => { setActiveCard(evt.target.id); return activeCard; }} className="cities__places-list places__list tabs__content">
+      <div className="cities__places-list places__list tabs__content">
         {cards.map((card) => (
           <Card
             id = {card.id}

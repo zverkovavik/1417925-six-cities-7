@@ -1,5 +1,6 @@
 import React from 'react';
 import OffersList from '../components/offers-list';
+import Map from '../components/map';
 import Logo from '../components/logo';
 import PropTypes from 'prop-types';
 
@@ -77,7 +78,9 @@ function MainPage(props) {
             <div className="cities__places-container container">
               <OffersList cards={cards} />
               <div className="cities__right-section">
-                <section className="cities__map map" />
+                <section className="cities__map map">
+                  <Map cards={cards}/>
+                </section>
               </div>
             </div>
           </div>

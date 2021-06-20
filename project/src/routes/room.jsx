@@ -12,8 +12,8 @@ function Room(props) {
 
   const { cards, reviews } = props;
   const {isPremium, images, price, isFavorite, rating, title, type, bedrooms, description,goods, maxAdults, host: { avatarUrl, id, isPro, userName } } = cards[cards.length - 1];
-
-  cards.length = CARD_COUNT;
+  const apartmentsNear = cards.slice();
+  apartmentsNear.length = CARD_COUNT;
 
   return (
     <div className="page">
@@ -134,7 +134,7 @@ function Room(props) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {cards.map((card) => (
+              {apartmentsNear.map((card) => (
                 <Card
                   id = {card.id}
                   isPremium = {card.isPremium}

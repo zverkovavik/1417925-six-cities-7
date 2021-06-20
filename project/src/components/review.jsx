@@ -1,5 +1,4 @@
 import React from 'react';
-// import reviewsProp from '../mocks/reviews-prop';
 import PropTypes from 'prop-types';
 
 function Review(props) {

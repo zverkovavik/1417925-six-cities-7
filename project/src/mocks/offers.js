@@ -6,7 +6,7 @@ export const Cards = [
       location: {
         latitude: 52.370216,
         longitude: 4.895168,
-        zoom: 10,
+        zoom: 12,
       },
       city: 'Amsterdam',
     },
@@ -23,8 +23,8 @@ export const Cards = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 3,
@@ -57,8 +57,8 @@ export const Cards = [
     isPremium: false,
     images: ['img/apartment-02.jpg'],
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 10,
@@ -91,8 +91,8 @@ export const Cards = [
     isFavorite: true,
     images: ['img/apartment-03.jpg'],
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8,
     },
     maxAdults: 6,
@@ -125,8 +125,8 @@ export const Cards = [
     isFavorite: false,
     isPremium: false,
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8,
     },
     maxAdults: 4,

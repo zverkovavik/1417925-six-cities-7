@@ -1,13 +1,15 @@
 import React from 'react';
 import Card from '../components/card';
+import { connect } from 'react-redux';
 import cardsProp from '../mocks/offers-prop';
+import PropTypes from 'prop-types';
 function OffersList(props) {
 
-  const {cards} = props;
+  const { city, adsList } = props;
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">312 places to stay in Amsterdam</b>
+      <b className="places__found">{adsList.length} places to stay in {city}</b>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>
         <span className="places__sorting-type" tabIndex={0}>
@@ -24,7 +26,7 @@ function OffersList(props) {
         </ul>
       </form>
       <div className="cities__places-list places__list tabs__content">
-        {cards.map((card) => (
+        {adsList.map((card) => (
           <Card
             id = {card.id}
             isPremium = {card.isPremium}
@@ -43,6 +45,14 @@ function OffersList(props) {
 }
 
 OffersList.propTypes =  {
-  cards: cardsProp,
+  adsList: cardsProp,
+  city: PropTypes.string.isRequired,
 };
-export default OffersList;
+
+const mapStateToProps = (state) => ({
+  city: state.city,
+  adsList: state.adsList,
+});
+
+export {OffersList};
+export default connect(mapStateToProps, null)(OffersList);

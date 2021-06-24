@@ -9,9 +9,9 @@ const FIRST_ARRAY_ELEMENT = 0;
 const MARKER_URL = 'img/pin.svg';
 
 function Map(props) {
-  const { adsList, cards } = props;
+  const { adsList } = props;
 
-  const city = cards[FIRST_ARRAY_ELEMENT];
+  const city = adsList[FIRST_ARRAY_ELEMENT];
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -49,13 +49,20 @@ function Map(props) {
 }
 
 const mapStateToProps = (state) => ({
+  city: state.city,
   adsList: state.adsList,
 });
 
 Map.propTypes = {
-  adsList: PropTypes.array.isRequired,
-  cards: PropTypes.arrayOf(
+  adsList: PropTypes.arrayOf(
     PropTypes.shape({
+      city: PropTypes.shape({
+        location: PropTypes.shape({
+          latitude: PropTypes.number.isRequired,
+          longitude: PropTypes.number.isRequired,
+          zoom: PropTypes.number.isRequired,
+        }),
+      }),
       location: PropTypes.shape({
         latitude: PropTypes.number.isRequired,
         longitude: PropTypes.number.isRequired,

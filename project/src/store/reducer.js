@@ -1,12 +1,15 @@
 import { ActionType } from './action';
-import { Cities } from '../constants';
-import { Cards } from '../mocks/offers';
+import { Cities, AuthorizationStatus } from '../constants';
+import { adaptToClient } from '../utils';
 
-const filterCardsByCurrentCity = (city) => Cards.filter((card) => city === card.city.city);
+const filterCardsByCurrentCity = (cards, city) => cards.filter((card) => city === card.city.name);
 
 const initialState = {
   city: Cities.PARIS,
-  adsList: filterCardsByCurrentCity(Cities.PARIS),
+  cards: [],
+  adsList: [],
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -15,7 +18,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         city: action.payload,
-        adsList: filterCardsByCurrentCity(action.payload),
+        adsList: filterCardsByCurrentCity(state.cards, action.payload),
+      };
+    case ActionType.LOAD_AD_CARDS:
+      return {
+        ...state,
+        cards: adaptToClient(action.payload),
+        adsList: filterCardsByCurrentCity(adaptToClient(action.payload), state.city),
+        isDataLoaded: true,
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;

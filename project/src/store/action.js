@@ -8,6 +8,9 @@ export const ActionType = {
   SET_ACTIVE_CARD: 'set-active-card',
   RESET_ACTIVE_CARD: 'reset-active-card',
   LOAD_REVIEWS: 'load-reviews',
+  SHOW_SORT_MENU: 'show-sort-menu',
+  RESET_SORT_MENU: 'reset-sort-menu',
+  SET_SORT_TYPE: 'set-sort-type',
 };
 
 export const ActionCreator = {
@@ -17,6 +20,10 @@ export const ActionCreator = {
   }),
   loadAdCards: (data) => ({
     type: ActionType.LOAD_AD_CARDS,
+    payload: data,
+  }),
+  loadReviews: (data) => ({
+    type: ActionType.LOAD_REVIEWS,
     payload: data,
   }),
   requireAuthorization: (status) => ({
@@ -40,10 +47,15 @@ export const ActionCreator = {
   }),
   resetActiveCard: () => ({
     type: ActionType.RESET_ACTIVE_CARD,
-    payload: 0,
   }),
-  loadReviews: (data) => ({
-    type: ActionType.LOAD_REVIEWS,
-    payload: data,
+  showSortMenu: () => ({
+    type: ActionType.SHOW_SORT_MENU,
+  }),
+  reserSortMenu: () => ({
+    type: ActionType.RESET_SORT_MENU,
+  }),
+  setSortType: (sortType) => ({
+    type: ActionType.SET_SORT_TYPE,
+    payload: sortType,
   }),
 };

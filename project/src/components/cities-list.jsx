@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Cities } from '../constants';
+import { City } from '../constants';
 import { connect } from 'react-redux';
 import { ActionCreator } from '../store/action';
 
@@ -10,7 +10,7 @@ function CitiesList(props) {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {Object.values(Cities).map((element) => (
+        {Object.values(City).map((element) => (
           <li className="locations__item" key={element}>
             <p onClick={() => onCityClick(element)} className={element === city ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}>
               <span>{element}</span>

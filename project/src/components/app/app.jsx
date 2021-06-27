@@ -20,7 +20,7 @@ function App(props) {
 
   useEffect(() => {
     initApp();
-  }, [initApp]);
+  }, []);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

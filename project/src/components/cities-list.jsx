@@ -12,9 +12,9 @@ function CitiesList(props) {
       <ul className="locations__list tabs__list">
         {Object.values(Cities).map((element) => (
           <li className="locations__item" key={element}>
-            <a onClick={(evt) =>{ evt.preventDefault(); onCityClick(element);}} className={element === city ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} href="/">
+            <p onClick={() => onCityClick(element)} className={element === city ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} href="/">
               <span>{element}</span>
-            </a>
+            </p>
           </li>
         ))}
       </ul>

@@ -45,8 +45,8 @@ function OffersList(props) {
 }
 
 OffersList.propTypes =  {
-  adsList: cardsProp,
   city: PropTypes.string.isRequired,
+  adsList: cardsProp,
 };
 
 const mapStateToProps = (state) => ({

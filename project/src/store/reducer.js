@@ -10,6 +10,7 @@ const initialState = {
   adsList: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
+  login: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,10 +33,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
       };
+    case ActionType.SET_EMAIL:
+      return {
+        ...state,
+        login: action.payload,
+      };
     case ActionType.LOGOUT:
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+        login: '',
       };
     default:
       return state;

@@ -43,9 +43,9 @@ function LoginScreen({onSubmit}) {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/">
+              <p className="locations__item-link">
                 <span>Amsterdam</span>
-              </a>
+              </p>
             </div>
           </section>
         </div>

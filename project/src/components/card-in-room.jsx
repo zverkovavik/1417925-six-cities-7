@@ -1,18 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { ActionCreator } from '../store/action';
 
-function Card(props) {
+function CardInRoom(props) {
 
-  const { id, isPremium, previewImage, price, isFavorite, rating, title, type, activeCardId, onCardMouseOver, onCardMouseOut } = props;
+  const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = props;
 
   return (
-    <article onMouseOver={() => onCardMouseOver(id)} onMouseOut={() => onCardMouseOut()} className="cities__place-card place-card">
+    <article onMouseOver={() => id} className="cities__place-card place-card">
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '' }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${activeCardId}`}>
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place" />
         </Link>
       </div>
@@ -44,7 +42,7 @@ function Card(props) {
   );
 }
 
-Card.propTypes = {
+CardInRoom.propTypes = {
   id: PropTypes.number.isRequired,
   isPremium: PropTypes.bool.isRequired,
   previewImage: PropTypes.string.isRequired,
@@ -53,23 +51,8 @@ Card.propTypes = {
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  activeCardId: PropTypes.number.isRequired,
-  onCardMouseOver: PropTypes.func.isRequired,
-  onCardMouseOut: PropTypes.func.isRequired,
+
 };
 
-const mapStateToProps = (state) => ({
-  activeCardId: state.activeCardId,
-});
+export { CardInRoom };
 
-const mapDispatchToProps = (dispatch) => ({
-  onCardMouseOver(cardId) {
-    dispatch(ActionCreator.setActiveCard(cardId));
-  },
-  onCardMouseOut() {
-    dispatch(ActionCreator.resetActiveCard());
-  },
-});
-
-export {Card};
-export default connect(mapStateToProps, mapDispatchToProps)(Card);

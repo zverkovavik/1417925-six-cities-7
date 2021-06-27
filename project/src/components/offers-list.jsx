@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../components/card';
 import { connect } from 'react-redux';
-import cardsProp from '../mocks/offers-prop';
+import cardsProp from '../prop-types/offers-prop';
 import PropTypes from 'prop-types';
 function OffersList(props) {
 
@@ -54,5 +54,5 @@ const mapStateToProps = (state) => ({
   adsList: state.adsList,
 });
 
-export {OffersList};
+export { OffersList };
 export default connect(mapStateToProps, null)(OffersList);

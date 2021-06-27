@@ -1,8 +1,7 @@
 import { ActionType } from './action';
 import { Cities, AuthorizationStatus } from '../constants';
-import { adaptToClient } from '../utils';
-
-const filterCardsByCurrentCity = (cards, city) => cards.filter((card) => city === card.city.name);
+import { adaptToClient, filterCardsByCurrentCity } from '../utils';
+import { Reviews } from '../components/mocks/reviews';
 
 const initialState = {
   city: Cities.PARIS,
@@ -11,6 +10,8 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
   login: '',
+  activeCardId: 0,
+  reviews: Reviews,
 };
 
 const reducer = (state = initialState, action) => {
@@ -43,6 +44,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
         login: '',
+      };
+    case ActionType.SET_ACTIVE_CARD:
+      return {
+        ...state,
+        activeCardId: action.payload,
+      };
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    case ActionType.RESET_ACTIVE_CARD:
+      return {
+        ...state,
+        activeCardId: action.payload,
       };
     default:
       return state;

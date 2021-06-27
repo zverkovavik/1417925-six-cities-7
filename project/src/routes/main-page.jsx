@@ -4,10 +4,10 @@ import Map from '../components/map';
 import CitiesList from '../components/cities-list';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import cardInDetailsProp from '../mocks/offer-in-details-prop';
+import cardInDetailsProp from '../prop-types/offer-in-details-prop';
 import { Header } from '../components/header';
 function MainPage(props) {
-  const { authorizationStatus, cards } = props;
+  const { authorizationStatus, adsList } = props;
 
   return (
     <div>
@@ -26,7 +26,7 @@ function MainPage(props) {
               <OffersList />
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map cards={cards} />
+                  <Map adsList={adsList} />
                 </section>
               </div>
             </div>
@@ -39,14 +39,14 @@ function MainPage(props) {
 
 MainPage.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  cards: PropTypes.arrayOf(
+  adsList: PropTypes.arrayOf(
     cardInDetailsProp,
   ),
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
-  cards: state.cards,
+  adsList: state.adsList,
 });
 
 export {MainPage};

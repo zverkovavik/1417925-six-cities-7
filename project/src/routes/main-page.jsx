@@ -46,7 +46,7 @@ function MainPage(props) {
               <OffersList cards={cards} />
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map cards={cards}/>
+                  <Map cards={cards} />
                 </section>
               </div>
             </div>

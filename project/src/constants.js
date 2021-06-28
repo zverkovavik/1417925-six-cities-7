@@ -3,7 +3,6 @@ export const AppRoute = {
   ROOT: '/',
   FAVORITES: '/favorites',
   ROOM: '/offer/:id?',
-  DEV_ROOM: '/dev-room',
 };
 
 export const ratingForm = [
@@ -36,4 +35,16 @@ export const Cities = {
   AMSTERDAM: 'Amsterdam',
   HAMBURG: 'Hamburg',
   DUSSELDORF: 'Dusseldorf',
+};
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+export const ApiRoute = {
+  HOTELS: '/hotels',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
 };

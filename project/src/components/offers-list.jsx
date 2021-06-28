@@ -36,7 +36,7 @@ function OffersList(props) {
             rating = {card.rating}
             title = {card.title}
             type = {card.type}
-            key = {card.title}
+            key = {card.title + card.id}
           />),
         )}
       </div>

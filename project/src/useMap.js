@@ -11,14 +11,14 @@ function useMap(mapRef, city) {
     if (mapRef.current !== null && map === null) {
       const instance = leaflet.map('map', {
         center: {
-          lat: city.location.latitude,
-          lng: city.location.longitude,
+          lat: city.city.location.latitude,
+          lng: city.city.location.longitude,
         },
-        zoom: city.location.zoom,
+        zoom: city.city.location.zoom,
         zoomControl: false,
         marker: true,
       });
-      instance.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+      instance.setView([city.city.location.latitude, city.city.location.longitude], city.city.location.zoom);
 
       leaflet.tileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -27,6 +27,9 @@ function useMap(mapRef, city) {
         }).addTo(instance);
 
       setMap(instance);
+
+    } else {
+      map.panTo(new leaflet.LatLng(city.city.location.latitude, city.city.location.longitude));
     }
   }, [mapRef, map, city]);
 

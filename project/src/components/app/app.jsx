@@ -1,10 +1,8 @@
 import React from 'react';
 import MainPage from '../../routes/main-page';
-// import cardsProp from '../../mocks/offers-prop';
-// import reviewsProp from '../../mocks/reviews-prop';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Router as BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../constants';
-import Login from '../../routes/login';
+import LoginScreen from '../../routes/login';
 import Favorites from '../../routes/favorites';
 import Room from '../../routes/room';
 import NotFoundScreen from '../../routes/not-found';
@@ -12,10 +10,11 @@ import LoadingScreen from '../loading-screen';
 import { isCheckedAuth } from '../../utils';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import PrivateRoute from '../private-route/private-route';
+import browserHistory from '../../browser-history';
 function App(props) {
 
-  const {authorizationStatus, isDataLoaded, cards} = props;
+  const {authorizationStatus, isDataLoaded } = props;
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
@@ -23,19 +22,18 @@ function App(props) {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainPage cards={cards} />;
+          <MainPage />;
         </Route>
         <Route exact path={AppRoute.LOGIN}>
-          <Login />
+          <LoginScreen />
         </Route>
-        <Route  exact path={AppRoute.FAVORITES}>
-          <Favorites cards={cards} />
-        </Route>
+        <PrivateRoute exact path={AppRoute.FAVORITES} render={() => <Favorites />}>
+        </PrivateRoute>
         <Route exact path={AppRoute.ROOM}>
-          <Room cards={cards} />
+          <Room />
         </Route>
         <Route>
           <NotFoundScreen />
@@ -48,13 +46,11 @@ function App(props) {
 App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
-  cards: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
   isDataLoaded: state.isDataLoaded,
-  cards: state.cards,
 });
 
 export {App};

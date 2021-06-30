@@ -1,46 +1,23 @@
 import React from 'react';
 import Card from '../components/card';
-import Logo from '../components/logo';
 import Review from '../components/review';
 import NewCommentForm from '../components/form-to-submit-comment';
 import cardInDetailsProp from '../mocks/offer-in-details-prop';
 import reviewsProp from '../mocks/reviews-prop';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Header } from '../components/header';
 
 const CARD_COUNT = 3;
 function Room(props) {
-
-  const { cards, reviews } = props;
-  const {isPremium, images, price, isFavorite, rating, title, type, bedrooms, description,goods, maxAdults, host: { avatarUrl, id, isPro, userName } } = cards[cards.length - 1];
-  const apartmentsNear = cards.slice();
+  const { adsList, reviews, authorizationStatus } = props;
+  const {isPremium, images, price, isFavorite, rating, title, type, bedrooms, description,goods, maxAdults, host: { avatarUrl, isPro, userName } } = adsList[adsList.length - 1];
+  const apartmentsNear = adsList.slice();
   apartmentsNear.length = CARD_COUNT;
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header authorizationStatus={authorizationStatus} />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -93,7 +70,7 @@ function Room(props) {
                   {goods.map((item) => (<li key={item} className="property__inside-item">{item}</li>))}
                 </ul>
               </div>
-              <div id={id} className="property__host">
+              <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
@@ -110,10 +87,14 @@ function Room(props) {
                   </p>
                 </div>
               </div>
-              {/* <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+              <section className="property__reviews reviews">
+                {reviews ?
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                  :
+                  <h2 className="reviews__title">No reviews yet</h2>}
+
                 <ul className="reviews__list">
-                  {reviews.map((review) => (
+                  {reviews ? reviews.map((review) => (
                     <Review
                       comment = {review.comment}
                       date = { review.date}
@@ -122,10 +103,10 @@ function Room(props) {
                       authorName = {review.user.authorName}
                       key = {review.comment}
                     />
-                  ))}
+                  )) : ''}
                 </ul>
                 <NewCommentForm />
-              </section> */}
+              </section>
             </div>
           </div>
           <section className="property__map map"></section>
@@ -144,7 +125,7 @@ function Room(props) {
                   rating = {card.rating}
                   title = {card.title}
                   type = {card.type}
-                  key = {card.title}
+                  key = {card.title + card.id}
                 />),
               )}
             </div>
@@ -156,10 +137,18 @@ function Room(props) {
 }
 
 Room.propTypes = {
-  cards: PropTypes.arrayOf(
+  adsList: PropTypes.arrayOf(
     cardInDetailsProp,
   ),
   reviews: reviewsProp,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
-export default Room;
+const mapStateToProps = (state) => ({
+  adsList: state.adsList,
+  authorizationStatus: state.authorizationStatus,
+  login: state.login,
+});
+
+export {Room};
+export default connect(mapStateToProps)(Room);

@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import { reducer } from './store/reducer';
 import {createAPI} from './services/api';
-import { checkAuth, fetchAdCardsList } from './store/api-actions';
 import { ActionCreator } from './store/action';
 import { AuthorizationStatus } from './constants';
 import { redirect } from './store/middlewares/redirect';
@@ -23,9 +22,6 @@ const store = createStore(
     applyMiddleware(redirect),
   ),
 );
-
-store.dispatch(checkAuth());
-store.dispatch(fetchAdCardsList());
 
 ReactDOM.render(
   <Provider store={store}>

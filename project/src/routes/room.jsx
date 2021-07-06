@@ -1,20 +1,25 @@
 import React from 'react';
-import Card from '../components/card';
+import {CardInRoom }from '../components/card-in-room';
 import Review from '../components/review';
 import NewCommentForm from '../components/form-to-submit-comment';
-import cardInDetailsProp from '../mocks/offer-in-details-prop';
-import reviewsProp from '../mocks/reviews-prop';
+import cardInDetailsProp from '../prop-types/offer-in-details-prop';
+import reviewsProp from '../prop-types/reviews-prop';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Header } from '../components/header';
+import Map from '../components/map';
+import { getCardWithTheSameId, checkReviews, getDate } from '../utils';
 
 const CARD_COUNT = 3;
 function Room(props) {
-  const { adsList, reviews, authorizationStatus } = props;
-  const {isPremium, images, price, isFavorite, rating, title, type, bedrooms, description,goods, maxAdults, host: { avatarUrl, isPro, userName } } = adsList[adsList.length - 1];
-  const apartmentsNear = adsList.slice();
-  apartmentsNear.length = CARD_COUNT;
+  const { adsList, reviews, authorizationStatus, activeCardId } = props;
+  const chosenCard = getCardWithTheSameId(adsList, activeCardId);
+  const sortedReviews = checkReviews(reviews);
 
+  const [{ isPremium, images, price, isFavorite, rating, title, type, bedrooms, description, goods, maxAdults, host: { avatarUrl, isPro, userName } }] = chosenCard;
+
+  const apartmentsNear = adsList.filter((element) => element.id !== activeCardId);
+  apartmentsNear.length = CARD_COUNT;
   return (
     <div className="page">
       <Header authorizationStatus={authorizationStatus} />
@@ -89,19 +94,19 @@ function Room(props) {
               </div>
               <section className="property__reviews reviews">
                 {reviews ?
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{sortedReviews.length}</span></h2>
                   :
                   <h2 className="reviews__title">No reviews yet</h2>}
 
                 <ul className="reviews__list">
-                  {reviews ? reviews.map((review) => (
+                  {sortedReviews ? sortedReviews.map((review) => (
                     <Review
                       comment = {review.comment}
-                      date = { review.date}
+                      date = {getDate(review.date)}
                       ratingInReview = {review.ratingInReview}
                       avatarUrl = {review.user.avatarUrl}
                       authorName = {review.user.authorName}
-                      key = {review.comment}
+                      key = {review.comment + review.id}
                     />
                   )) : ''}
                 </ul>
@@ -109,14 +114,16 @@ function Room(props) {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map" style={{ marginLeft: 'auto', marginRight: 'auto', width: '90%' }}>
+            <Map adsList={apartmentsNear} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {apartmentsNear.map((card) => (
-                <Card
+                <CardInRoom
                   id = {card.id}
                   isPremium = {card.isPremium}
                   previewImage = {card.previewImage}
@@ -142,13 +149,15 @@ Room.propTypes = {
   ),
   reviews: reviewsProp,
   authorizationStatus: PropTypes.string.isRequired,
+  activeCardId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   adsList: state.adsList,
+  reviews: state.reviews,
   authorizationStatus: state.authorizationStatus,
-  login: state.login,
+  activeCardId: state.activeCardId,
 });
 
 export {Room};
-export default connect(mapStateToProps)(Room);
+export default connect(mapStateToProps, null)(Room);

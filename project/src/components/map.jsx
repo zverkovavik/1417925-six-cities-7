@@ -4,13 +4,15 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useMap from '../useMap';
 import { connect } from 'react-redux';
+import { getCardWithTheSameId } from '../utils';
+import offersInMap from '../prop-types/offers-used-in-map';
 
 const FIRST_ARRAY_ELEMENT = 0;
 const MARKER_URL = 'img/pin.svg';
+const ACTIVE_MARKER_URL = 'img/pin-active.svg';
 
 function Map(props) {
-  const { adsList } = props;
-
+  const { activeCardId, cards, adsList } = props;
   const city = adsList[FIRST_ARRAY_ELEMENT];
 
   const mapRef = useRef(null);
@@ -22,6 +24,11 @@ function Map(props) {
     iconAnchor: [15, 30],
   });
 
+  const activeIcon = leaflet.icon({
+    iconUrl: ACTIVE_MARKER_URL,
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+  });
 
   useEffect(() => {
     if (map) {
@@ -30,7 +37,19 @@ function Map(props) {
           layer.remove();
         }
       });
-      adsList.forEach((ad) => {
+
+      getCardWithTheSameId(cards, activeCardId).forEach((ad) => {
+        leaflet
+          .marker({
+            lat: ad.location.latitude,
+            lng: ad.location.longitude,
+          }, {
+            icon: activeIcon,
+          })
+          .addTo(map);
+      });
+
+      adsList.filter((element) => element.id !== activeCardId).forEach((ad) => {
         leaflet
           .marker({
             lat: ad.location.latitude,
@@ -41,7 +60,7 @@ function Map(props) {
           .addTo(map);
       });
     }
-  }, [map, adsList, icon]);
+  }, [map, adsList, cards, activeCardId, icon, activeIcon]);
 
   return (
     <div id="map" style={{ height: '100%' }} ref={mapRef}></div>
@@ -49,27 +68,14 @@ function Map(props) {
 }
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  adsList: state.adsList,
+  activeCardId: state.activeCardId,
+  cards: state.cards,
 });
 
 Map.propTypes = {
-  adsList: PropTypes.arrayOf(
-    PropTypes.shape({
-      city: PropTypes.shape({
-        location: PropTypes.shape({
-          latitude: PropTypes.number.isRequired,
-          longitude: PropTypes.number.isRequired,
-          zoom: PropTypes.number.isRequired,
-        }),
-      }),
-      location: PropTypes.shape({
-        latitude: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,
-        zoom: PropTypes.number.isRequired,
-      }),
-    }),
-  ),
+  adsList: offersInMap,
+  activeCardId: PropTypes.number.isRequired,
+  cards: offersInMap,
 };
 
 export {Map};

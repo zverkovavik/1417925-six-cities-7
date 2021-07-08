@@ -1,7 +1,6 @@
 import { ActionType } from './action';
 import { City, AuthorizationStatus, SortType } from '../constants';
-import { adaptToClient, filterCardsByCurrentCity, setSortType } from '../utils';
-import { Reviews } from '../components/mocks/reviews';
+import { adaptToClient, adaptToClientCardsArray, filterCardsByCurrentCity, setSortType } from '../utils';
 
 const EMPTY_ACTIVE_CARD = 0;
 
@@ -14,7 +13,10 @@ const initialState = {
   isDataLoaded: false,
   login: '',
   activeCardId: EMPTY_ACTIVE_CARD,
-  reviews: Reviews,
+  activeCard: null,
+  favoriteList: [],
+  apartmentsNear: [],
+  reviews: [],
   isSortMenuShow: false,
   sortTypeName: SortType.POPULAR,
 };
@@ -32,10 +34,30 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_AD_CARDS:
       return {
         ...state,
-        cards: adaptToClient(action.payload),
-        adsList: filterCardsByCurrentCity(adaptToClient(action.payload), state.city),
-        primarySortAdsList: filterCardsByCurrentCity(adaptToClient(action.payload), state.city),
+        cards: adaptToClientCardsArray(action.payload),
+        adsList: filterCardsByCurrentCity(adaptToClientCardsArray(action.payload), state.city),
+        primarySortAdsList: filterCardsByCurrentCity(adaptToClientCardsArray(action.payload), state.city),
         isDataLoaded: true,
+      };
+    case ActionType.LOAD_ONE_CARD:
+      return {
+        ...state,
+        activeCard: adaptToClient(action.payload),
+      };
+    case ActionType.LOAD_APARTMENTS_NEAR:
+      return {
+        ...state,
+        apartmentsNear: adaptToClientCardsArray(action.payload),
+      };
+    case ActionType.LOAD_FAVORITE_LIST:
+      return {
+        ...state,
+        favoriteList: action.payload,
+      };
+    case ActionType.CHANGE_FAVORITE_LIST:
+      return {
+        ...state,
+        // не реализован
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
@@ -61,6 +83,11 @@ const reducer = (state = initialState, action) => {
         activeCardId: action.payload,
       };
     case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    case ActionType.POST_COMMENT:
       return {
         ...state,
         reviews: action.payload,

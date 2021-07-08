@@ -47,6 +47,8 @@ export const ApiRoute = {
   HOTELS: '/hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  FAVORITE: '/favorite',
+  COMMENTS: '/comments',
 };
 
 export const SortType = {

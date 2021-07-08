@@ -4,31 +4,30 @@ import dayjs from 'dayjs';
 const REVIEW_COUNT = 10;
 export const isCheckedAuth = (authorizationStatus) => authorizationStatus === AuthorizationStatus.UNKNOWN;
 
-export const adaptToClient = (cards) => {
-  const adaptedCards = cards.map((card) => {
-    const adaptedAdCard = Object.assign(
-      {},
-      card,
-      {
-        host: {
-          avatarUrl: card.host.avatar_url,
-          isPro: card.host.is_pro,
-          userName: card.host.name,
-        },
-        isFavorite: card.is_favorite,
-        isPremium: card.is_premium,
-        maxAdults: card.max_adults,
-        previewImage: card.preview_image,
+export const adaptToClient = (card) => {
+  const adaptedAdCard = Object.assign(
+    {},
+    card,
+    {
+      host: {
+        avatarUrl: card.host.avatar_url,
+        isPro: card.host.is_pro,
+        userName: card.host.name,
       },
-    );
-    delete adaptedAdCard.is_favorite;
-    delete adaptedAdCard.is_premium;
-    delete adaptedAdCard.max_adults;
-    delete adaptedAdCard.preview_image;
-    return adaptedAdCard;
-  });
-  return adaptedCards;
+      isFavorite: card.is_favorite,
+      isPremium: card.is_premium,
+      maxAdults: card.max_adults,
+      previewImage: card.preview_image,
+    },
+  );
+  delete adaptedAdCard.is_favorite;
+  delete adaptedAdCard.is_premium;
+  delete adaptedAdCard.max_adults;
+  delete adaptedAdCard.preview_image;
+  return adaptedAdCard;
 };
+
+export const adaptToClientCardsArray = (cards) =>  cards.map((card) => adaptToClient(card));
 
 export const getCardWithTheSameId = (array, id) => array.filter((element) => element.id === id);
 

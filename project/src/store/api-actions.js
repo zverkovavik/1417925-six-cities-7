@@ -9,6 +9,56 @@ export const fetchAdCardsList = () => (dispatch, _getState, api) => (
     })
 );
 
+export const fetchOneAdCard = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.HOTELS}/${id}`)
+    .then(({ data }) => dispatch(ActionCreator.loadOneCard(data)))
+    .catch((response) => {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    })
+);
+
+export const fetchApartmentsNear = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.HOTELS}/${id}/nearby`)
+    .then(({ data }) => dispatch(ActionCreator.loadApartmentsNear(data)))
+    .catch((response) => {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    })
+);
+
+export const fetchFavoriteList = () => (dispatch, _getState, api) => (
+  api.get(ApiRoute.FAVORITE)
+    .then(({ data }) => dispatch(ActionCreator.loadFavoriteList(data)))
+    .catch((response) => {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    })
+);
+
+export const changeFavoriteList = () => (dispatch, _getState, api) => (
+  // реализован частично
+  // POST /favorite/: hotel_id/: status
+  api.post(ApiRoute.FAVORITE)
+    .then(({ data }) => dispatch(ActionCreator.changeFavoriteList(data)))
+    .catch((response) => {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    })
+);
+
+export const fetchCommentsList = (id) => (dispatch, _getState, api) => (
+  api.get(`${ApiRoute.COMMENTS}/${id}`)
+    .then(({ data }) => dispatch(ActionCreator.loadReviews(data)))
+    .catch((response) => {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    })
+);
+
+export const postComment = (id) => (dispatch, _getState, api) => (
+  api.post(`${ApiRoute.COMMENTS}${id}`)
+    .then(({ data }) => dispatch(ActionCreator.postComment(data)))
+    .catch((response) => {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    })
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
     .then(({ data }) => dispatch(ActionCreator.setEmail(data.email)))

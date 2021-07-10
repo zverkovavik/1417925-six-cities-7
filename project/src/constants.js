@@ -28,7 +28,7 @@ export const ratingForm = [
   },
 ];
 
-export const Cities = {
+export const City = {
   PARIS: 'Paris',
   COLOGNE: 'Cologne',
   BRUSSELS: 'Brussels',
@@ -47,4 +47,20 @@ export const ApiRoute = {
   HOTELS: '/hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  FAVORITE: '/favorite',
+  COMMENTS: '/comments',
 };
+
+export const SortType = {
+  POPULAR: 'Popular',
+  HIGH_TO_LOW: 'Price: high to low',
+  LOW_TO_HIGH: 'Price: low to high',
+  TOP_RATED_FIRST: 'Top rated first',
+};
+
+export const sortTypes = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first',
+];

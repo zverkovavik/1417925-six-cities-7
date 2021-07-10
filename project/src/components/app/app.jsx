@@ -4,7 +4,7 @@ import { Router as BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../constants';
 import LoginScreen from '../../routes/login';
 import Favorites from '../../routes/favorites';
-import Room from '../../routes/room';
+import Room from '../../routes/room/room';
 import NotFoundScreen from '../../routes/not-found';
 import LoadingScreen from '../loading-screen';
 import { isCheckedAuth } from '../../utils';
@@ -20,7 +20,7 @@ function App(props) {
 
   useEffect(() => {
     initApp();
-  }, [initApp]);
+  }, []);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

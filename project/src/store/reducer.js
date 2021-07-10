@@ -1,17 +1,24 @@
 import { ActionType } from './action';
-import { Cities, AuthorizationStatus } from '../constants';
-import { adaptToClient, filterCardsByCurrentCity } from '../utils';
-import { Reviews } from '../components/mocks/reviews';
+import { City, AuthorizationStatus, SortType } from '../constants';
+import { adaptToClient, adaptToClientCardsArray, filterCardsByCurrentCity, setSortType } from '../utils';
+
+const EMPTY_ACTIVE_CARD = 0;
 
 const initialState = {
-  city: Cities.PARIS,
+  city: City.PARIS,
   cards: [],
   adsList: [],
+  primarySortAdsList: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
   login: '',
-  activeCardId: 0,
-  reviews: Reviews,
+  activeCardId: EMPTY_ACTIVE_CARD,
+  activeCard: null,
+  favoriteList: [],
+  apartmentsNear: [],
+  reviews: [],
+  isSortMenuShow: false,
+  sortTypeName: SortType.POPULAR,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,18 +27,42 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         city: action.payload,
+        sortTypeName: SortType.POPULAR,
         adsList: filterCardsByCurrentCity(state.cards, action.payload),
+        primarySortAdsList: filterCardsByCurrentCity(state.cards, action.payload),
       };
     case ActionType.LOAD_AD_CARDS:
       return {
         ...state,
-        cards: adaptToClient(action.payload),
-        adsList: filterCardsByCurrentCity(adaptToClient(action.payload), state.city),
+        cards: adaptToClientCardsArray(action.payload),
+        adsList: filterCardsByCurrentCity(adaptToClientCardsArray(action.payload), state.city),
+        primarySortAdsList: filterCardsByCurrentCity(adaptToClientCardsArray(action.payload), state.city),
         isDataLoaded: true,
+      };
+    case ActionType.LOAD_ONE_CARD:
+      return {
+        ...state,
+        activeCard: adaptToClient(action.payload),
+      };
+    case ActionType.LOAD_APARTMENTS_NEAR:
+      return {
+        ...state,
+        apartmentsNear: adaptToClientCardsArray(action.payload),
+      };
+    case ActionType.LOAD_FAVORITE_LIST:
+      return {
+        ...state,
+        favoriteList: action.payload,
+      };
+    case ActionType.CHANGE_FAVORITE_LIST:
+      return {
+        ...state,
+        // не реализован
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
+        sortTypeName: SortType.POPULAR,
         authorizationStatus: action.payload,
       };
     case ActionType.SET_EMAIL:
@@ -42,6 +73,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOGOUT:
       return {
         ...state,
+        sortTypeName: SortType.POPULAR,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
         login: '',
       };
@@ -55,10 +87,31 @@ const reducer = (state = initialState, action) => {
         ...state,
         reviews: action.payload,
       };
+    case ActionType.POST_COMMENT:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
     case ActionType.RESET_ACTIVE_CARD:
       return {
         ...state,
-        activeCardId: action.payload,
+        activeCardId: EMPTY_ACTIVE_CARD,
+      };
+    case ActionType.SHOW_SORT_MENU:
+      return {
+        ...state,
+        isSortMenuShow: true,
+      };
+    case ActionType.RESET_SORT_MENU:
+      return {
+        ...state,
+        isSortMenuShow: false,
+      };
+    case ActionType.SET_SORT_TYPE:
+      return {
+        ...state,
+        sortTypeName: action.payload,
+        adsList: setSortType(state.primarySortAdsList, state.sortType, action.payload),
       };
     default:
       return state;

@@ -1,25 +1,34 @@
-import React from 'react';
-import {CardInRoom }from '../components/card-in-room';
-import Review from '../components/review';
-import NewCommentForm from '../components/form-to-submit-comment';
-import cardInDetailsProp from '../prop-types/offer-in-details-prop';
-import reviewsProp from '../prop-types/reviews-prop';
+import React, { useEffect }  from 'react';
+import {CardInRoom }from '../../components/card-in-room';
+import Review from '../../components/review';
+import NewCommentForm from '../../components/form-to-submit-comment';
+import cardInDetailsProp from '../../prop-types/offer-in-details-prop';
+import reviewsProp from '../../prop-types/reviews-prop';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '../components/header';
-import Map from '../components/map';
-import { getCardWithTheSameId, checkReviews, getDate } from '../utils';
+import { Header } from '../../components/header';
+import Map from '../../components/map';
+import { checkReviews, getDate } from '../../utils';
+import { initRoom } from './action/init-room';
+import LoadingScreen from '../../components/loading-screen';
 
-const CARD_COUNT = 3;
 function Room(props) {
-  const { adsList, reviews, authorizationStatus, activeCardId } = props;
-  const chosenCard = getCardWithTheSameId(adsList, activeCardId);
+
+  const { activeCard, activeCardId, apartmentsNear, reviews, authorizationStatus, init } = props;
+
+  useEffect(() => {
+    init(activeCardId);
+  }, [activeCard, apartmentsNear]);
+
+  if (activeCard === null || reviews === null) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   const sortedReviews = checkReviews(reviews);
+  const { isPremium, images, price, isFavorite, rating, title, type, bedrooms, description, goods, maxAdults, host: { avatarUrl, isPro, userName }} = activeCard;
 
-  const [{ isPremium, images, price, isFavorite, rating, title, type, bedrooms, description, goods, maxAdults, host: { avatarUrl, isPro, userName } }] = chosenCard;
-
-  const apartmentsNear = adsList.filter((element) => element.id !== activeCardId);
-  apartmentsNear.length = CARD_COUNT;
   return (
     <div className="page">
       <Header authorizationStatus={authorizationStatus} />
@@ -144,20 +153,27 @@ function Room(props) {
 }
 
 Room.propTypes = {
-  adsList: PropTypes.arrayOf(
-    cardInDetailsProp,
-  ),
+  init: PropTypes.func.isRequired,
   reviews: reviewsProp,
   authorizationStatus: PropTypes.string.isRequired,
   activeCardId: PropTypes.number.isRequired,
+  activeCard: cardInDetailsProp,
+  apartmentsNear: PropTypes.arrayOf(
+    cardInDetailsProp,
+  ),
 };
 
 const mapStateToProps = (state) => ({
-  adsList: state.adsList,
+  activeCard: state.activeCard,
+  apartmentsNear: state.apartmentsNear,
   reviews: state.reviews,
   authorizationStatus: state.authorizationStatus,
   activeCardId: state.activeCardId,
 });
 
+const mapDispatchToProps = (dispatch) =>({
+  init: (id) => dispatch(initRoom(id)),
+});
+
 export {Room};
-export default connect(mapStateToProps, null)(Room);
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

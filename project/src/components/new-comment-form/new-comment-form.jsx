@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ratingForm } from '../constants';
+import { ratingForm } from '../../constants';
 
 const createRatingForm = (numberValue, definition) => (
   <React.Fragment key={definition}>

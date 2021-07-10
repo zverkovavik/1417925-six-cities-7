@@ -1,16 +1,16 @@
 import React, { useEffect }  from 'react';
-import {CardInRoom }from '../../components/card-in-room';
-import Review from '../../components/review';
-import NewCommentForm from '../../components/form-to-submit-comment';
+import {CardInRoom }from '../../components/card-for-room-component/card-for-room-component';
+import Review from '../../components/review/review';
+import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import cardInDetailsProp from '../../prop-types/offer-in-details-prop';
 import reviewsProp from '../../prop-types/reviews-prop';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '../../components/header';
-import Map from '../../components/map';
-import { checkReviews, getDate } from '../../utils';
+import { Header } from '../../components/header/header';
+import Map from '../../components/map/map';
+import { checkReviews, getDate } from '../../utils/utils';
 import { initRoom } from './action/init-room';
-import LoadingScreen from '../../components/loading-screen';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
 function Room(props) {
 

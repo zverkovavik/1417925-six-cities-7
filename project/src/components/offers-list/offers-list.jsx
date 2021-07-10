@@ -1,8 +1,8 @@
 import React from 'react';
-import SortTypeMenu from './sort-menu';
-import Card from '../components/card';
+import SortTypeMenu from '../sort-type-menu/sort-type-menu';
+import Card from '../card/card';
 import { connect } from 'react-redux';
-import cardsProp from '../prop-types/offers-prop';
+import cardsProp from '../../prop-types/offers-prop';
 import PropTypes from 'prop-types';
 function OffersList(props) {
 

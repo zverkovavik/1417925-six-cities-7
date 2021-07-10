@@ -1,11 +1,12 @@
 import React from 'react';
-import OffersList from '../components/offers-list';
-import Map from '../components/map';
-import CitiesList from '../components/cities-list';
+import OffersList from '../../components/offers-list/offers-list';
+import Map from '../../components/map/map';
+import CitiesList from '../../components/cities-list/cities-list';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import cardInDetailsProp from '../prop-types/offer-in-details-prop';
-import { Header } from '../components/header';
+import cardInDetailsProp from '../../prop-types/offer-in-details-prop';
+import { Header } from '../../components/header/header';
+
 function MainPage(props) {
   const { authorizationStatus, adsList } = props;
 

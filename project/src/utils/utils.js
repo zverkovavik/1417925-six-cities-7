@@ -1,4 +1,4 @@
-import { AuthorizationStatus, SortType } from './constants';
+import { AuthorizationStatus, SortType } from '../constants';
 import dayjs from 'dayjs';
 
 const REVIEW_COUNT = 10;
@@ -49,8 +49,6 @@ export const checkReviews = (array) => {
 };
 
 export const getDate = (date) => dayjs(date).format('MMMM YYYY');
-
-export const filterCardsByCurrentCity = (cards, city) => cards.filter((card) => city === card.city.name);
 
 export const setSortType = (currentList, currentSortType, activeSortType) => {
   const currentAdsList = currentList.slice();

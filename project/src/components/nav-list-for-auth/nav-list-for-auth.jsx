@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { logout } from '../store/api-actions';
+import { logout } from '../../store/api-actions';
 import { connect } from 'react-redux';
-import { AppRoute } from '../constants';
+import { AppRoute } from '../../constants';
+
 function NavListForAuth (props) {
   const { login, logoutApp } = props;
   return (
@@ -30,6 +31,7 @@ function NavListForAuth (props) {
     </nav>
   );
 }
+
 NavListForAuth.propTypes = {
   login: PropTypes.string.isRequired,
   logoutApp: PropTypes.func.isRequired,

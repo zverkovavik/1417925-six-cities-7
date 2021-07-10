@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { City } from '../constants';
+import { City } from '../../constants';
 import { connect } from 'react-redux';
-import { ActionCreator } from '../store/action';
+import { ActionCreator } from '../../store/action';
 
 function CitiesList(props) {
   const { city, onCityClick } = props;
@@ -22,6 +22,11 @@ function CitiesList(props) {
   );
 }
 
+CitiesList.propTypes = {
+  city: PropTypes.string.isRequired,
+  onCityClick: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   city: state.city,
 });
@@ -31,11 +36,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.changeCity(city));
   },
 });
-
-CitiesList.propTypes = {
-  city: PropTypes.string.isRequired,
-  onCityClick: PropTypes.func.isRequired,
-};
 
 export {CitiesList};
 export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);

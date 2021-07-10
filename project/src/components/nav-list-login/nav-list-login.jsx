@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../constants';
+import { AppRoute } from '../../constants';
 
 function NavListLogin() {
   return (

@@ -1,6 +1,7 @@
 import { ActionType } from './action';
 import { City, AuthorizationStatus, SortType } from '../constants';
-import { adaptToClient, adaptToClientCardsArray, filterCardsByCurrentCity, setSortType } from '../utils';
+import { adaptToClient, adaptToClientCardsArray, setSortType } from '../utils/utils';
+import { filterCardsByCurrentCity } from '../routes/main-page/selectors';
 
 const EMPTY_ACTIVE_CARD = 0;
 
@@ -8,7 +9,6 @@ const initialState = {
   city: City.PARIS,
   cards: [],
   adsList: [],
-  primarySortAdsList: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
   login: '',
@@ -17,7 +17,6 @@ const initialState = {
   favoriteList: [],
   apartmentsNear: [],
   reviews: [],
-  isSortMenuShow: false,
   sortTypeName: SortType.POPULAR,
 };
 
@@ -29,14 +28,12 @@ const reducer = (state = initialState, action) => {
         city: action.payload,
         sortTypeName: SortType.POPULAR,
         adsList: filterCardsByCurrentCity(state.cards, action.payload),
-        primarySortAdsList: filterCardsByCurrentCity(state.cards, action.payload),
       };
     case ActionType.LOAD_AD_CARDS:
       return {
         ...state,
         cards: adaptToClientCardsArray(action.payload),
         adsList: filterCardsByCurrentCity(adaptToClientCardsArray(action.payload), state.city),
-        primarySortAdsList: filterCardsByCurrentCity(adaptToClientCardsArray(action.payload), state.city),
         isDataLoaded: true,
       };
     case ActionType.LOAD_ONE_CARD:
@@ -97,21 +94,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         activeCardId: EMPTY_ACTIVE_CARD,
       };
-    case ActionType.SHOW_SORT_MENU:
-      return {
-        ...state,
-        isSortMenuShow: true,
-      };
-    case ActionType.RESET_SORT_MENU:
-      return {
-        ...state,
-        isSortMenuShow: false,
-      };
     case ActionType.SET_SORT_TYPE:
       return {
         ...state,
         sortTypeName: action.payload,
-        adsList: setSortType(state.primarySortAdsList, state.sortType, action.payload),
+        adsList: setSortType(filterCardsByCurrentCity(state.cards, state.city), state.sortType, action.payload),
       };
     default:
       return state;

@@ -5,7 +5,7 @@ import { AppRoute } from '../../constants';
 import LoginScreen from '../../routes/login/login';
 import Favorites from '../../routes/favorites/favorites';
 import Room from '../../routes/room/room';
-import NotFoundScreen from '../../routes/not-found/not-found';
+import NotFoundScreen from '../../routes/not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../utils/utils';
 import PropTypes from 'prop-types';

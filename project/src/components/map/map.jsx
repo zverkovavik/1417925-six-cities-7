@@ -6,6 +6,7 @@ import useMap from '../../hooks/use-map';
 import { connect } from 'react-redux';
 import { getCardWithTheSameId } from '../../utils/utils';
 import offersInMap from '../../prop-types/offers-used-in-map';
+import { filterCardsByCurrentCity } from '../../routes/main-page/selectors';
 
 const FIRST_ARRAY_ELEMENT = 0;
 const MarkerUrl = {
@@ -14,8 +15,8 @@ const MarkerUrl = {
 };
 
 function Map(props) {
-  const { activeCardId, cards, adsList } = props;
-  const city = adsList[FIRST_ARRAY_ELEMENT];
+  const { activeCardId, cards, chosenCity, adsList } = props;
+  const city = (filterCardsByCurrentCity(cards, chosenCity))[FIRST_ARRAY_ELEMENT];
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -72,12 +73,14 @@ function Map(props) {
 const mapStateToProps = (state) => ({
   activeCardId: state.activeCardId,
   cards: state.cards,
+  chosenCity: state.city,
 });
 
 Map.propTypes = {
   adsList: offersInMap,
   activeCardId: PropTypes.number.isRequired,
   cards: offersInMap,
+  chosenCity: PropTypes.string.isRequired,
 };
 
 export {Map};

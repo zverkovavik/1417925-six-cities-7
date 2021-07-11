@@ -1,6 +1,7 @@
 import { ActionType } from './action';
 import { City, AuthorizationStatus, SortType } from '../constants';
-import { adaptToClient, adaptToClientCardsArray, setSortType } from '../utils/utils';
+import { setSortType } from '../utils/utils';
+import { adaptToClient, adaptToClientCardsArray, adaptToClientReviewsArray } from '../utils/adapter';
 import { filterCardsByCurrentCity } from '../routes/main-page/selectors';
 
 const EMPTY_ACTIVE_CARD = 0;
@@ -49,7 +50,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_FAVORITE_LIST:
       return {
         ...state,
-        favoriteList: action.payload,
+        favoriteList: adaptToClientCardsArray(action.payload),
       };
     case ActionType.CHANGE_FAVORITE_LIST:
       return {
@@ -82,7 +83,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_REVIEWS:
       return {
         ...state,
-        reviews: action.payload,
+        reviews: adaptToClientReviewsArray(action.payload),
       };
     case ActionType.POST_COMMENT:
       return {

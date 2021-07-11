@@ -12,17 +12,14 @@ export const fetchAdCardsList = () => (dispatch, _getState, api) => (
 export const fetchOneAdCard = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.HOTELS}/${id}`)
     .then(({ data }) => dispatch(ActionCreator.loadOneCard(data)))
-    .catch((response) => {
-      throw new Error(`${response.status}: ${response.statusText}`);
+    .catch(() => {
+      dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND));
     })
 );
 
 export const fetchApartmentsNear = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.HOTELS}/${id}/nearby`)
     .then(({ data }) => dispatch(ActionCreator.loadApartmentsNear(data)))
-    .catch((response) => {
-      throw new Error(`${response.status}: ${response.statusText}`);
-    })
 );
 
 export const fetchFavoriteList = () => (dispatch, _getState, api) => (
@@ -46,18 +43,10 @@ export const changeFavoriteList = () => (dispatch, _getState, api) => (
 export const fetchCommentsList = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.COMMENTS}/${id}`)
     .then(({ data }) => dispatch(ActionCreator.loadReviews(data)))
-    .catch((response) => {
-      throw new Error(`${response.status}: ${response.statusText}`);
-    })
 );
 
-export const postComment = (id) => (dispatch, _getState, api) => (
-  api.post(`${ApiRoute.COMMENTS}${id}`)
-    .then(({ data }) => dispatch(ActionCreator.postComment(data)))
-    .catch((response) => {
-      throw new Error(`${response.status}: ${response.statusText}`);
-    })
-);
+export const postComment = (id, {comment, rating}) => (dispatch, _getState, api) =>
+  api.post(`${ApiRoute.COMMENTS}/${id}`, {comment, rating});
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)

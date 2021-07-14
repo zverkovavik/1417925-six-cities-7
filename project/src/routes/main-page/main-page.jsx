@@ -2,13 +2,15 @@ import React from 'react';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import cardInDetailsProp from '../../prop-types/offer-in-details-prop';
+import { useSelector } from 'react-redux';
 import { Header } from '../../components/header/header';
+import { getAdsList } from '../../store/app-data/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
 function MainPage(props) {
-  const { authorizationStatus, adsList } = props;
+
+  const adsList = useSelector(getAdsList);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     <div>
@@ -38,17 +40,4 @@ function MainPage(props) {
   );
 }
 
-MainPage.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  adsList: PropTypes.arrayOf(
-    cardInDetailsProp,
-  ),
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  adsList: state.adsList,
-});
-
-export {MainPage};
-export default connect(mapStateToProps)(MainPage);
+export default MainPage;

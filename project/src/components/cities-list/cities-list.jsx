@@ -1,11 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { City } from '../../constants';
-import { connect } from 'react-redux';
-import { ActionCreator } from '../../store/action';
+import { changeCity } from '../../store/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCity } from '../../store/app-data/selectors';
+import { resetSortType } from '../../store/action';
 
 function CitiesList(props) {
-  const { city, onCityClick } = props;
+
+  const city = useSelector(getCity);
+  const dispatch = useDispatch();
+  const onCityClick = (chosenCity) => {
+    dispatch(changeCity(chosenCity));
+    dispatch(resetSortType());
+  };
 
   return (
     <section className="locations container">
@@ -22,20 +29,4 @@ function CitiesList(props) {
   );
 }
 
-CitiesList.propTypes = {
-  city: PropTypes.string.isRequired,
-  onCityClick: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onCityClick(city) {
-    dispatch(ActionCreator.changeCity(city));
-  },
-});
-
-export {CitiesList};
-export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);
+export default CitiesList;

@@ -5,14 +5,14 @@ import SortTypeMenuElement from '../sort-type-menu-element/sort-type-menu-elemen
 
 
 function SortTypeMenu(props) {
-  const { sortTypeName } = props;
+  const { sortType } = props;
   const [ shown, setShown ] = useState(false);
 
   return (
     <form onMouseLeave={() => setShown(false)} className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span onMouseEnter={() => setShown(true)} className="places__sorting-type" tabIndex={0}>
-        {sortTypeName}
+        {sortType}
         <svg className="places__sorting-arrow" width={7} height={4}>
           <use xlinkHref="#icon-arrow-select" />
         </svg>
@@ -31,7 +31,7 @@ function SortTypeMenu(props) {
 }
 
 SortTypeMenu.propTypes = {
-  sortTypeName: PropTypes.string.isRequired,
+  sortType: PropTypes.string.isRequired,
 };
 
 export default SortTypeMenu;

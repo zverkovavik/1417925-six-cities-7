@@ -3,7 +3,7 @@ import { ratingForm } from '../../constants';
 import { postComment } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { ActionCreator } from '../../store/action';
+import { loadReviews } from '../../store/action';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -42,7 +42,7 @@ function NewCommentForm(props) {
 
     dispatch(postComment(id, newComment))
       .then(({data}) => {
-        dispatch(ActionCreator.loadReviews(data));
+        dispatch(loadReviews(data));
         isSubmitting = false;
         setValue(defaultValue);
         isFormChecked = true;

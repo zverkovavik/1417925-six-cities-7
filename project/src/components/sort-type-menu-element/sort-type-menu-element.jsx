@@ -1,30 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { ActionCreator } from '../../store/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortType } from '../../store/action';
+import { getSortType } from '../../store/app-data/selectors';
 
 function SortTypeMenuElement(props) {
-  const { element, sortTypeName, onSortTypeClick } = props;
+
+  const { element} = props;
+
+  const sortType = useSelector(getSortType);
+
+  const dispatch = useDispatch();
+  const onSortTypeClick = (sortTypeName) => {
+    dispatch(setSortType(sortTypeName));
+  };
+
   return (
-    <li onClick={(evt) => onSortTypeClick(evt.target.dataset.value)} data-value={element} key={element} className={sortTypeName === element ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{element}</li>
+    <li onClick={(evt) => onSortTypeClick(evt.target.dataset.value)} data-value={element} key={element} className={sortType === element ? 'places__option places__option--active' : 'places__option'} tabIndex={0}>{element}</li>
   );
 }
 
 SortTypeMenuElement.propTypes = {
   element: PropTypes.string.isRequired,
-  sortTypeName: PropTypes.string.isRequired,
-  onSortTypeClick: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  sortTypeName: state.sortTypeName,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSortTypeClick(sortTypeName) {
-    dispatch(ActionCreator.setSortType(sortTypeName));
-  },
-});
-
-export {SortTypeMenuElement};
-export default connect(mapStateToProps, mapDispatchToProps)(SortTypeMenuElement);
+export default SortTypeMenuElement;

@@ -1,12 +1,16 @@
 import React from 'react';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
 import FooterLogo from '../../components/footer-logo/footer-logo';
-import PropTypes from 'prop-types';
 import { Header } from '../../components/header/header';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { getCards } from '../../store/app-data/selectors';
 
 function Favorites(props) {
-  const { cards, authorizationStatus } = props;
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const cards = useSelector(getCards);
+
   return (
     <div className="page">
       <Header authorizationStatus={authorizationStatus} />
@@ -44,25 +48,4 @@ function Favorites(props) {
     </div>);
 }
 
-Favorites.propTypes = {
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      previewImage: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      isFavorite: PropTypes.bool.isRequired,
-      rating: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  cards: state.cards,
-});
-
-export {Favorites};
-export default connect(mapStateToProps, null)(Favorites);
+export default Favorites;

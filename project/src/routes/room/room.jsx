@@ -3,28 +3,33 @@ import { useParams } from 'react-router-dom';
 import { CardInRoom }from '../../components/card-for-room-component/card-for-room-component';
 import Review from '../../components/review/review';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
-import cardInDetailsProp from '../../prop-types/offer-in-details-prop';
-import reviewsProp from '../../prop-types/reviews-prop';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Header } from '../../components/header/header';
 import Map from '../../components/map/map';
 import { checkReviews, getDate } from '../../utils/utils';
 import { initRoom } from './action/init-room';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../constants';
-import { ActionCreator } from '../../store/action';
+import { setActiveCard } from '../../store/action';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { getActiveCard, getApartmentsNear, getReviews } from '../../store/app-data/selectors';
 
 const MAX_IMAGE_COUNT = 6;
+
 function Room(props) {
 
-  const { activeCard, apartmentsNear, authorizationStatus, reviews, init, setActiveCardId } = props;
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    init(id);
-    setActiveCardId(Number(id));
+    dispatch(initRoom(id));
+    dispatch(setActiveCard(Number(id)));
   }, [id]);
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const activeCard = useSelector(getActiveCard);
+  const apartmentsNear = useSelector(getApartmentsNear);
+  const reviews = [...useSelector(getReviews)];
 
   if (activeCard === null || reviews === null) {
     return (
@@ -158,29 +163,4 @@ function Room(props) {
   );
 }
 
-Room.propTypes = {
-  init: PropTypes.func.isRequired,
-  setActiveCardId: PropTypes.func.isRequired,
-  reviews: reviewsProp,
-  authorizationStatus: PropTypes.string.isRequired,
-  activeCard: cardInDetailsProp,
-  apartmentsNear: PropTypes.arrayOf(
-    cardInDetailsProp,
-  ),
-};
-
-const mapStateToProps = (state) => ({
-  activeCard: state.activeCard,
-  apartmentsNear: state.apartmentsNear,
-  reviews: state.reviews,
-  authorizationStatus: state.authorizationStatus,
-});
-
-const mapDispatchToProps = (dispatch) =>({
-  init: (id) => dispatch(initRoom(id)),
-  setActiveCardId: (id) =>
-    dispatch(ActionCreator.setActiveCard(id)),
-});
-
-export { Room };
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default Room;

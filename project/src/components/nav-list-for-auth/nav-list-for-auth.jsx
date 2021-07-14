@@ -1,12 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { logout } from '../../store/api-actions';
-import { connect } from 'react-redux';
 import { AppRoute } from '../../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLogin } from '../../store/user/selectors';
+import { resetSortType } from '../../store/action';
 
 function NavListForAuth (props) {
-  const { login, logoutApp } = props;
+
+  const dispatch = useDispatch();
+  const login = useSelector(getLogin);
+  const logoutApp = () => {
+    dispatch(resetSortType());
+    dispatch(logout());
+  };
+
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -32,20 +40,4 @@ function NavListForAuth (props) {
   );
 }
 
-NavListForAuth.propTypes = {
-  login: PropTypes.string.isRequired,
-  logoutApp: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  login: state.login,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  logoutApp() {
-    dispatch(logout());
-  },
-});
-
-export {NavListForAuth};
-export default connect(mapStateToProps, mapDispatchToProps)(NavListForAuth);
+export default NavListForAuth;

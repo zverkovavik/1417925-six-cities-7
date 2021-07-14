@@ -1,24 +1,30 @@
 import React, { useEffect }  from 'react';
-import {CardInRoom }from '../../components/card-in-room';
-import Review from '../../components/review';
-import NewCommentForm from '../../components/form-to-submit-comment';
+import { useParams } from 'react-router-dom';
+import { CardInRoom }from '../../components/card-for-room-component/card-for-room-component';
+import Review from '../../components/review/review';
+import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import cardInDetailsProp from '../../prop-types/offer-in-details-prop';
 import reviewsProp from '../../prop-types/reviews-prop';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '../../components/header';
-import Map from '../../components/map';
-import { checkReviews, getDate } from '../../utils';
+import { Header } from '../../components/header/header';
+import Map from '../../components/map/map';
+import { checkReviews, getDate } from '../../utils/utils';
 import { initRoom } from './action/init-room';
-import LoadingScreen from '../../components/loading-screen';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { AuthorizationStatus } from '../../constants';
+import { ActionCreator } from '../../store/action';
 
+const MAX_IMAGE_COUNT = 6;
 function Room(props) {
 
-  const { activeCard, activeCardId, apartmentsNear, reviews, authorizationStatus, init } = props;
+  const { activeCard, apartmentsNear, authorizationStatus, reviews, init, setActiveCardId } = props;
+  const { id } = useParams();
 
   useEffect(() => {
-    init(activeCardId);
-  }, [activeCard, apartmentsNear]);
+    init(id);
+    setActiveCardId(Number(id));
+  }, [id]);
 
   if (activeCard === null || reviews === null) {
     return (
@@ -36,10 +42,10 @@ function Room(props) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image) => (
+              {images.slice(0, MAX_IMAGE_COUNT).map((image) => (
                 <div key ={image} className="property__image-wrapper">
                   <img className="property__image" src={image} alt={image} />
-                </div>))};
+                </div>))}
             </div>
           </div>
           <div className="property__container container">
@@ -108,30 +114,30 @@ function Room(props) {
                   <h2 className="reviews__title">No reviews yet</h2>}
 
                 <ul className="reviews__list">
-                  {sortedReviews ? sortedReviews.map((review) => (
+                  {sortedReviews.length ? sortedReviews.map((review) => (
                     <Review
                       comment = {review.comment}
                       date = {getDate(review.date)}
-                      ratingInReview = {review.ratingInReview}
+                      rating = {review.rating}
                       avatarUrl = {review.user.avatarUrl}
                       authorName = {review.user.authorName}
                       key = {review.comment + review.id}
                     />
                   )) : ''}
                 </ul>
-                <NewCommentForm />
+                { authorizationStatus === AuthorizationStatus.AUTH ? <NewCommentForm /> : ''}
               </section>
             </div>
           </div>
           <section className="property__map map" style={{ marginLeft: 'auto', marginRight: 'auto', width: '90%' }}>
-            <Map adsList={apartmentsNear} />
+            <Map activeCardId={id} adsList={apartmentsNear} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {apartmentsNear.map((card) => (
+              {!apartmentsNear.length ? '' : apartmentsNear.map((card) => (
                 <CardInRoom
                   id = {card.id}
                   isPremium = {card.isPremium}
@@ -154,9 +160,9 @@ function Room(props) {
 
 Room.propTypes = {
   init: PropTypes.func.isRequired,
+  setActiveCardId: PropTypes.func.isRequired,
   reviews: reviewsProp,
   authorizationStatus: PropTypes.string.isRequired,
-  activeCardId: PropTypes.number.isRequired,
   activeCard: cardInDetailsProp,
   apartmentsNear: PropTypes.arrayOf(
     cardInDetailsProp,
@@ -168,12 +174,13 @@ const mapStateToProps = (state) => ({
   apartmentsNear: state.apartmentsNear,
   reviews: state.reviews,
   authorizationStatus: state.authorizationStatus,
-  activeCardId: state.activeCardId,
 });
 
 const mapDispatchToProps = (dispatch) =>({
   init: (id) => dispatch(initRoom(id)),
+  setActiveCardId: (id) =>
+    dispatch(ActionCreator.setActiveCard(id)),
 });
 
-export {Room};
+export { Room };
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

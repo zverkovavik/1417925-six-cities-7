@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import Logo from '../components/logo';
+import Logo from '../../components/logo/logo';
 import PropTypes from 'prop-types';
-import { login } from '../store/api-actions';
+import { login } from '../../store/api-actions';
 import { connect } from 'react-redux';
 function LoginScreen({onSubmit}) {
   const emailRef = useRef();

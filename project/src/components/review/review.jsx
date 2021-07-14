@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Review(props) {
 
-  const { comment, date, ratingInReview, avatarUrl, authorName } = props;
+  const { comment, date, rating, avatarUrl, authorName } = props;
   return (
     <ul className="reviews__list">
       <li className="reviews__item">
@@ -18,7 +18,7 @@ function Review(props) {
         <div className="reviews__info">
           <div className="reviews__rating rating">
             <div className="reviews__stars rating__stars">
-              <span style={{width: `${ratingInReview * 20}%`}}></span>
+              <span style={{width: `${rating * 20}%`}}></span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
@@ -36,7 +36,7 @@ function Review(props) {
 Review.propTypes = {
   comment: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  ratingInReview: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   authorName: PropTypes.string.isRequired,
 

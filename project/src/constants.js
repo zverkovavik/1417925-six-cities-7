@@ -3,6 +3,7 @@ export const AppRoute = {
   ROOT: '/',
   FAVORITES: '/favorites',
   ROOM: '/offer/:id?',
+  NOT_FOUND: '/not-found',
 };
 
 export const ratingForm = [

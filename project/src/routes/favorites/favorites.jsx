@@ -1,8 +1,8 @@
 import React from 'react';
-import FavoriteCard from '../components/favorite-card';
-import FooterLogo from '../components/footer-logo';
+import FavoriteCard from '../../components/favorite-card/favorite-card';
+import FooterLogo from '../../components/footer-logo/footer-logo';
 import PropTypes from 'prop-types';
-import { Header } from '../components/header';
+import { Header } from '../../components/header/header';
 import { connect } from 'react-redux';
 
 function Favorites(props) {

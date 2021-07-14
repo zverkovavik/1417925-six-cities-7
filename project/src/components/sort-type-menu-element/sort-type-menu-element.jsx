@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActionCreator } from '../store/action';
+import { ActionCreator } from '../../store/action';
 
 function SortTypeMenuElement(props) {
   const { element, sortTypeName, onSortTypeClick } = props;

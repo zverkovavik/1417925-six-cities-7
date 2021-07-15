@@ -1,7 +1,7 @@
 import React from 'react';
 import FavoriteCard from '../../components/favorite-card/favorite-card';
 import FooterLogo from '../../components/footer-logo/footer-logo';
-import { Header } from '../../components/header/header';
+import Header from '../../components/header/header';
 import { useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { getCards } from '../../store/app-data/selectors';

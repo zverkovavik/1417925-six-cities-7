@@ -5,10 +5,8 @@ import useMap from '../../hooks/use-map';
 import { useSelector } from 'react-redux';
 import { getCardWithTheSameId } from '../../utils/utils';
 import offersInMap from '../../prop-types/offers-used-in-map';
-import { filterCardsByCurrentCity } from '../../routes/main-page/selectors';
 import { getActiveCardId } from '../../store/app-logic/selectors';
-import { getCards } from '../../store/app-data/selectors';
-import { getCity } from '../../store/app-data/selectors';
+import { getCards, filterCardsByCurrentCity, getCity } from '../../store/app-data/selectors';
 
 const FIRST_ARRAY_ELEMENT = 0;
 const MarkerUrl = {
@@ -82,4 +80,4 @@ Map.propTypes = {
   adsList: offersInMap,
 };
 
-export default Map;
+export default React.memo(Map);

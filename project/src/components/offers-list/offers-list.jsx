@@ -34,4 +34,4 @@ function OffersList(props) {
   );
 }
 
-export default OffersList;
+export default React.memo(OffersList);

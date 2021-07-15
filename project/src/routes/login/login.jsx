@@ -14,12 +14,6 @@ function LoginScreen() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  // const onPasswordInput = () => {
-  //   if (passwordRef.current.value.chartAt(0) === ' ') {
-  //     passwordRef.current.value = '';
-  //   }
-  // };
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
 

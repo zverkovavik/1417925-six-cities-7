@@ -17,3 +17,5 @@ export const getReviews = (state) =>  state[NameSpace.DATA].reviews;
 export const getLoadedDataStatus = (state) => state[NameSpace.DATA].isDataLoaded;
 
 export const getSortType = (state) =>  state[NameSpace.DATA].sortType;
+
+export const filterCardsByCurrentCity = (cards, city) => cards.filter((card) => city === card.city.name);

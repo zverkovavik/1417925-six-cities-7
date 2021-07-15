@@ -48,10 +48,6 @@ export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
   payload: reviews,
 }));
 
-export const postComment = createAction(ActionType.POST_COMMENT, (review) => ({
-  payload: review,
-}));
-
 export const setEmail = createAction(ActionType.SET_EMAIL, (email) => ({
   payload: email,
 }));

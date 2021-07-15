@@ -29,4 +29,4 @@ function CitiesList(props) {
   );
 }
 
-export default CitiesList;
+export default React.memo(CitiesList);

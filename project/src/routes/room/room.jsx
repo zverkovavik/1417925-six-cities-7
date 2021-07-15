@@ -1,10 +1,10 @@
 import React, { useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import { CardInRoom }from '../../components/card-for-room-component/card-for-room-component';
+import CardInRoom from '../../components/card-for-room-component/card-for-room-component';
 import Review from '../../components/review/review';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Header } from '../../components/header/header';
+import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import { checkReviews, getDate } from '../../utils/utils';
 import { initRoom } from './action/init-room';

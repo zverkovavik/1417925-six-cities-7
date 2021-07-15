@@ -77,4 +77,4 @@ function NewCommentForm(props) {
   );
 }
 
-export default NewCommentForm;
+export default React.memo(NewCommentForm);

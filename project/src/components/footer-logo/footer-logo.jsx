@@ -10,4 +10,4 @@ function FooterLogo(props) {
     </footer>
   );
 }
-export default FooterLogo;
+export default React.memo(FooterLogo);

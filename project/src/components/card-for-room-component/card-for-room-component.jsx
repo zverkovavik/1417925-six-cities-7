@@ -54,5 +54,5 @@ CardInRoom.propTypes = {
 
 };
 
-export { CardInRoom };
+export default React.memo(CardInRoom);
 

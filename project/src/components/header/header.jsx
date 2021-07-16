@@ -24,4 +24,4 @@ Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-export { Header };
+export default React.memo(Header);

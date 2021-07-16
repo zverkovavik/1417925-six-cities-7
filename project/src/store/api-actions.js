@@ -1,9 +1,9 @@
-import { ActionCreator } from './action';
+import { setEmail, loadAdCards, loadOneCard, loadApartmentsNear, loadFavoriteList, loadReviews, redirectToRoute, requireAuthorization, logoutApp } from './action';
 import { AuthorizationStatus, ApiRoute, AppRoute } from '../constants';
 
 export const fetchAdCardsList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.HOTELS)
-    .then(({ data }) => dispatch(ActionCreator.loadAdCards(data)))
+    .then(({ data }) => dispatch(loadAdCards(data)))
     .catch((response) => {
       throw new Error(`${response.status}: ${response.statusText}`);
     })
@@ -11,20 +11,20 @@ export const fetchAdCardsList = () => (dispatch, _getState, api) => (
 
 export const fetchOneAdCard = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.HOTELS}/${id}`)
-    .then(({ data }) => dispatch(ActionCreator.loadOneCard(data)))
+    .then(({ data }) => dispatch(loadOneCard(data)))
     .catch(() => {
-      dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND));
+      dispatch(redirectToRoute(AppRoute.NOT_FOUND));
     })
 );
 
 export const fetchApartmentsNear = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.HOTELS}/${id}/nearby`)
-    .then(({ data }) => dispatch(ActionCreator.loadApartmentsNear(data)))
+    .then(({ data }) => dispatch(loadApartmentsNear(data)))
 );
 
 export const fetchFavoriteList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.FAVORITE)
-    .then(({ data }) => dispatch(ActionCreator.loadFavoriteList(data)))
+    .then(({ data }) => dispatch(loadFavoriteList(data)))
     .catch((response) => {
       throw new Error(`${response.status}: ${response.statusText}`);
     })
@@ -34,7 +34,7 @@ export const changeFavoriteList = () => (dispatch, _getState, api) => (
   // реализован частично
   // POST /favorite/: hotel_id/: status
   api.post(ApiRoute.FAVORITE)
-    .then(({ data }) => dispatch(ActionCreator.changeFavoriteList(data)))
+    .then(({ data }) => dispatch(changeFavoriteList(data)))
     .catch((response) => {
       throw new Error(`${response.status}: ${response.statusText}`);
     })
@@ -42,7 +42,7 @@ export const changeFavoriteList = () => (dispatch, _getState, api) => (
 
 export const fetchCommentsList = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.COMMENTS}/${id}`)
-    .then(({ data }) => dispatch(ActionCreator.loadReviews(data)))
+    .then(({ data }) => dispatch(loadReviews(data)))
 );
 
 export const postComment = (id, {comment, rating}) => (dispatch, _getState, api) =>
@@ -50,8 +50,8 @@ export const postComment = (id, {comment, rating}) => (dispatch, _getState, api)
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
-    .then(({ data }) => dispatch(ActionCreator.setEmail(data.email)))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(({ data }) => dispatch(setEmail(data.email)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     // проверить ТЗ нужно ли обрабатывать как-то зареджекшенный запрос
     .catch(() => {})
 );
@@ -60,14 +60,14 @@ export const login = ({email, password}) => (dispatch, _getState, api) => (
   api.post(ApiRoute.LOGIN, {email, password})
     .then(({ data }) => {
       localStorage.setItem('token', data.token);
-      dispatch(ActionCreator.setEmail(data.email));
+      dispatch(setEmail(data.email));
     })
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(ApiRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(ActionCreator.logout()))
+    .then(() => dispatch(logoutApp()))
 );

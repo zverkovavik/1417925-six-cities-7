@@ -13,6 +13,7 @@ const sortLowToHighPrice = (array) => array.sort((adA, adB) => adA.price - adB.p
 const sortByRating = (array) => array.sort((adA, adB) => adB.rating - adA.rating);
 
 export const checkReviews = (array) => {
+  
   let sortedReviews = array;
   if (array) {
     sortedReviews = sortByDate(array);
@@ -25,7 +26,7 @@ export const checkReviews = (array) => {
 
 export const getDate = (date) => dayjs(date).format('MMMM YYYY');
 
-export const setSortType = (currentList, currentSortType, activeSortType) => {
+export const getSortData = (currentList, currentSortType, activeSortType) => {
   const currentAdsList = currentList.slice();
   if (currentSortType === activeSortType) {
     return currentAdsList;

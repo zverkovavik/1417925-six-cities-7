@@ -1,17 +1,20 @@
 import React from 'react';
 import SortTypeMenu from '../sort-type-menu/sort-type-menu';
 import Card from '../card/card';
-import { connect } from 'react-redux';
-import cardsProp from '../../prop-types/offers-prop';
-import PropTypes from 'prop-types';
+import {  useSelector } from 'react-redux';
+import { getAdsList, getCity, getSortType } from '../../store/app-data/selectors';
+
 function OffersList(props) {
 
-  const { city, adsList, sortTypeName } = props;
+  const city = useSelector(getCity);
+  const adsList = useSelector(getAdsList);
+  const sortType = useSelector(getSortType);
+
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">{adsList.length} places to stay in {city}</b>
-      <SortTypeMenu sortTypeName={sortTypeName} />
+      <SortTypeMenu sortType={sortType} />
       <div className="cities__places-list places__list tabs__content">
         { adsList.map((card) => (
           <Card
@@ -31,18 +34,4 @@ function OffersList(props) {
   );
 }
 
-OffersList.propTypes =  {
-  city: PropTypes.string.isRequired,
-  adsList: cardsProp,
-  sortTypeName: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  sortType: state.SortType,
-  city: state.city,
-  sortTypeName: state.sortTypeName,
-  adsList: state.adsList,
-});
-
-export { OffersList };
-export default connect(mapStateToProps, null)(OffersList);
+export default React.memo(OffersList);

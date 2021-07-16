@@ -40,7 +40,6 @@ function FavoriteCard(props) {
   );
 }
 
-
 FavoriteCard.propTypes = {
   previewImage: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
@@ -48,4 +47,5 @@ FavoriteCard.propTypes = {
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };
+
 export default FavoriteCard;

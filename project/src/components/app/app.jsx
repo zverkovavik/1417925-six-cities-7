@@ -8,18 +8,22 @@ import Room from '../../routes/room/room';
 import NotFoundScreen from '../../routes/not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../utils/utils';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import PrivateRouteToFavorite from '../private-route-to-favorite/private-route-to-favorite';
 import PrivateRouteToLogin from '../private-route-to-login/private-route-to-login';
 import browserHistory from '../../browser-history';
 import { init } from './actions/init';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { getLoadedDataStatus } from '../../store/app-data/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+
 function App(props) {
 
-  const {authorizationStatus, isDataLoaded, initApp } = props;
+  const isDataLoaded = useSelector(getLoadedDataStatus);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    initApp();
+    dispatch(init());
   }, []);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
@@ -47,20 +51,4 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-  initApp: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
-});
-
-const mapDispatchToProps = (dispatch) =>({
-  initApp: () => dispatch(init()),
-});
-
-export {App};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

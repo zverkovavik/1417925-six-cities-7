@@ -1,12 +1,12 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import useMap from '../../hooks/use-map';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getCardWithTheSameId } from '../../utils/utils';
 import offersInMap from '../../prop-types/offers-used-in-map';
-import { filterCardsByCurrentCity } from '../../routes/main-page/selectors';
+import { getActiveCardId } from '../../store/app-logic/selectors';
+import { getCards, filterCardsByCurrentCity, getCity } from '../../store/app-data/selectors';
 
 const FIRST_ARRAY_ELEMENT = 0;
 const MarkerUrl = {
@@ -15,7 +15,12 @@ const MarkerUrl = {
 };
 
 function Map(props) {
-  const { activeCardId, cards, chosenCity, adsList } = props;
+  const { adsList } = props;
+
+  const activeCardId = useSelector(getActiveCardId);
+  const cards = useSelector(getCards);
+  const chosenCity = useSelector(getCity);
+
   const city = (filterCardsByCurrentCity(cards, chosenCity))[FIRST_ARRAY_ELEMENT];
 
   const mapRef = useRef(null);
@@ -70,18 +75,9 @@ function Map(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  activeCardId: state.activeCardId,
-  cards: state.cards,
-  chosenCity: state.city,
-});
 
 Map.propTypes = {
   adsList: offersInMap,
-  activeCardId: PropTypes.number.isRequired,
-  cards: offersInMap,
-  chosenCity: PropTypes.string.isRequired,
 };
 
-export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default React.memo(Map);

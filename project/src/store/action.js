@@ -1,78 +1,76 @@
+
+import { createAction } from '@reduxjs/toolkit';
+
 export const ActionType = {
-  LOAD_AD_CARDS: 'load-ad-cards',
-  LOAD_ONE_CARD: 'load-one-card',
-  LOAD_APARTMENTS_NEAR: 'load-apartments-near',
-  LOAD_FAVORITE_LIST: 'load-favorite-list',
-  CHANGE_FAVORITE_LIST: 'change-favorite-list',
-  LOAD_REVIEWS: 'load-reviews',
-  POST_COMMENT: 'post-comment',
-  REQUIRED_AUTHORIZATION: 'required-authorization',
-  LOGOUT: 'log-out',
-  SET_EMAIL: 'set-email',
+  LOAD_AD_CARDS: 'data/load-ad-cards',
+  LOAD_ONE_CARD: 'data/load-one-card',
+  LOAD_APARTMENTS_NEAR: 'data/load-apartments-near',
+  LOAD_FAVORITE_LIST: 'data/load-favorite-list',
+  CHANGE_FAVORITE_LIST: 'data/change-favorite-list',
+  LOAD_REVIEWS: 'data/load-reviews',
+  POST_COMMENT: 'data/post-comment',
+  REQUIRED_AUTHORIZATION: 'user/required-authorization',
+  LOGOUT: 'user/log-out',
+  SET_EMAIL: 'user/set-email',
   REDIRECT_TO_ROUTE: 'redirect-to-route',
   CHANGE_CITY: 'change-city',
   SET_ACTIVE_CARD: 'set-active-card',
   RESET_ACTIVE_CARD: 'reset-active-card',
   SET_SORT_TYPE: 'set-sort-type',
+  RESET_SORT_TYPE: 'reset-sort-type',
 };
 
-export const ActionCreator = {
-  changeCity: (currentCity) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: currentCity,
-  }),
-  loadAdCards: (data) => ({
-    type: ActionType.LOAD_AD_CARDS,
-    payload: data,
-  }),
-  loadOneCard: (card) => ({
-    type: ActionType.LOAD_ONE_CARD,
-    payload: card,
-  }),
-  loadApartmentsNear: (data) => ({
-    type: ActionType.LOAD_APARTMENTS_NEAR,
-    payload: data,
-  }),
-  loadFavoriteList: (data) => ({
-    type: ActionType.LOAD_FAVORITE_LIST,
-    payload: data,
-  }),
-  changeFavoriteList: (data) => ({
-    type: ActionType.CHANGE_FAVORITE_LIST,
-    payload: data,
-  }),
-  loadReviews: (data) => ({
-    type: ActionType.LOAD_REVIEWS,
-    payload: data,
-  }),
-  postComment: (data) => ({
-    type: ActionType.POST_COMMENT,
-    payload: data,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  setEmail: (email) => ({
-    type: ActionType.SET_EMAIL,
-    payload: email,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  setActiveCard: (cardId) => ({
-    type: ActionType.SET_ACTIVE_CARD,
-    payload: cardId,
-  }),
-  resetActiveCard: () => ({
-    type: ActionType.RESET_ACTIVE_CARD,
-  }),
-  setSortType: (sortType) => ({
-    type: ActionType.SET_SORT_TYPE,
-    payload: sortType,
-  }),
-};
+export const changeCity = createAction(ActionType.CHANGE_CITY, (currentCity) => ({
+  payload: currentCity,
+}));
+
+export const loadAdCards = createAction(ActionType.LOAD_AD_CARDS, (cards) => ({
+  payload: cards,
+}));
+
+export const loadOneCard = createAction(ActionType.LOAD_ONE_CARD, (card) => ({
+  payload: card,
+}));
+
+export const loadApartmentsNear = createAction(ActionType.LOAD_APARTMENTS_NEAR, (apartments) => ({
+  payload: apartments,
+}));
+
+export const loadFavoriteList = createAction(ActionType.LOAD_FAVORITE_LIST, (list) => ({
+  payload: list,
+}));
+
+export const changeFavoriteList = createAction(ActionType.CHANGE_FAVORITE_LIST, (changedCard) => ({
+  payload: changedCard,
+}));
+
+export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
+  payload: reviews,
+}));
+
+export const setEmail = createAction(ActionType.SET_EMAIL, (email) => ({
+  payload: email,
+}));
+
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
+  payload: status,
+}));
+
+export const logoutApp = createAction(ActionType.LOGOUT);
+
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));
+
+export const setActiveCard = createAction(ActionType.SET_ACTIVE_CARD, (cardId) => ({
+  payload: cardId,
+}));
+
+export const resetActiveCard = createAction(ActionType.RESET_ACTIVE_CARD);
+
+export const setSortType = createAction(ActionType.SET_SORT_TYPE, (sortType) => ({
+  payload: sortType,
+}));
+
+export const resetSortType = createAction(ActionType.RESET_SORT_TYPE);
+

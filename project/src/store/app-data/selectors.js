@@ -19,3 +19,20 @@ export const getLoadedDataStatus = (state) => state[NameSpace.DATA].isDataLoaded
 export const getSortType = (state) =>  state[NameSpace.DATA].sortType;
 
 export const filterCardsByCurrentCity = (cards, city) => cards.filter((card) => city === card.city.name);
+
+export const updateCards = (cards, updatedCard) => {
+  const index = cards.findIndex((item) => item.id === updatedCard.id);
+
+  const updatedCards = [
+    ...cards.slice(0, index),
+    updatedCard,
+    ...cards.slice(index + 1),
+  ];
+
+  return updatedCards;
+};
+
+export const createFavoriteList = (list) => {
+  // const set = new Set(list.map((element) => element.city.name));
+  // функция возвращает массив с объектами: [{ cityName: string, cards: [ ]}]
+};

@@ -3,19 +3,56 @@ import Logo from '../../components/logo/logo';
 import { login } from '../../store/api-actions';
 import { useDispatch } from 'react-redux';
 import { resetSortType } from '../../store/action';
+import { Link } from 'react-router-dom';
+import { changeCity } from '../../store/action';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { City, Toast } from '../../constants';
+
 
 function LoginScreen() {
   const dispatch = useDispatch();
 
   const onSubmit = (authData) => {
-    dispatch(login(authData));
+    dispatch(login(authData))
+      .catch(() => {
+        toast.error('Something went wrong. Please try again later.', {
+          position: Toast.POSITION,
+          autoClose: Toast.AUTO_CLOSE_TIME,
+        });
+      });
     dispatch(resetSortType());
   };
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const onPasswordInput = () => {
+    if ((passwordRef.current.value).slice(0,1) === ' ') {
+      passwordRef.current.value = '';
+      toast.error('Password cannot start with a space or consist only of spaces.', {
+        position: Toast.POSITION,
+        autoClose: Toast.AUTO_CLOSE_TIME,
+      });
+    }
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    if (!emailRef.current.value.includes('@')) {
+      toast.error('Please enter correct email.', {
+        position: Toast.POSITION,
+        autoClose: Toast.AUTO_CLOSE_TIME,
+      });
+      return;
+    }
+
+    if (passwordRef.current.value.length <= 3) {
+      toast.error('Password should contain more then 3 symbols.', {
+        position: Toast.POSITION,
+        autoClose: Toast.AUTO_CLOSE_TIME,
+      });
+      return;
+    }
 
     onSubmit({
       email: emailRef.current.value,
@@ -33,6 +70,7 @@ function LoginScreen() {
         </div>
       </header>
       <main className="page__main page__main--login">
+        <ToastContainer />
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
@@ -43,16 +81,16 @@ function LoginScreen() {
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input ref={passwordRef} className="login__input form__input" type="password" name="password" placeholder="Password" required="" />
+                <input ref={passwordRef} onInput={onPasswordInput} className="login__input form__input" type="password" name="password" placeholder="Password" autoComplete="off" required="" />
               </div>
               <button onClick={handleSubmit} className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <p className="locations__item-link">
+            <div onClick={() => dispatch(changeCity(City.AMSTERDAM))}className="locations__item">
+              <Link className="locations__item-link" to="/">
                 <span>Amsterdam</span>
-              </p>
+              </Link>
             </div>
           </section>
         </div>

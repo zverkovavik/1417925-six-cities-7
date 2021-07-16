@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { adaptToClient, adaptToClientCardsArray, adaptToClientReviewsArray } from '../../utils/adapter';
-import { filterCardsByCurrentCity } from './selectors';
-import { changeCity, loadAdCards, loadReviews, loadOneCard, loadFavoriteList, loadApartmentsNear, changeFavoriteList, setSortType, resetSortType } from '../action';
+import { filterCardsByCurrentCity, updateCards } from './selectors';
+import { changeCity, loadAdCards, loadReviews, loadOneCard, loadFavoriteList, loadApartmentsNear, updateFavoriteList, setSortType, resetSortType } from '../action';
 import { getSortData } from '../../utils/utils';
 import { City, SortType } from '../../constants';
 
@@ -38,8 +38,9 @@ const appData = createReducer(initialState, (builder) => {
     .addCase(loadFavoriteList, (state, action) => {
       state.favoriteList = adaptToClientCardsArray(action.payload);
     })
-    .addCase(changeFavoriteList, (state, action) => {
-      // не реализован
+    .addCase(updateFavoriteList, (state, action) => {
+      state.cards = updateCards(state.cards, adaptToClient(action.payload));
+      state.adsList = updateCards(state.adsList, adaptToClient(action.payload));
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = adaptToClientReviewsArray(action.payload);

@@ -2,13 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveCard, resetActiveCard } from '../../store/action';
-import { getActiveCardId } from '../../store/app-logic/selectors';
+import { setActiveCard, resetActiveCard, redirectToRoute } from '../../store/action';
+import { getActiveCardId } from '../../store/user/selectors';
+import { changeFavoriteList } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { AuthorizationStatus, AppRoute } from '../../constants';
+import { calculateRating } from '../../utils/utils';
+import { Status } from '../../constants';
 
 function Card(props) {
 
   const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = props;
   const activeCardId = useSelector(getActiveCardId);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
   const onCardMouseOver = (cardId) => {
@@ -19,8 +25,17 @@ function Card(props) {
     dispatch(resetActiveCard());
   };
 
+  const onFavoriteButtonClick = () => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      const status = isFavorite ? Status.UNFAVORITE : Status.FAVORITE;
+      dispatch(changeFavoriteList(id, status));
+    } else {
+      dispatch(redirectToRoute(AppRoute.LOGIN));
+    }
+  };
+
   return (
-    <article onMouseOver={() => onCardMouseOver(id)} onMouseOut={() => onCardMouseOut()} className="cities__place-card place-card">
+    <article onMouseOver={() => onCardMouseOver(id)} onMouseOut={onCardMouseOut} className="cities__place-card place-card">
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '' }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${activeCardId}`}>
@@ -33,7 +48,7 @@ function Card(props) {
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} type="button">
+          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} onClick={onFavoriteButtonClick} type="button">
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>
@@ -42,7 +57,7 @@ function Card(props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating * 20}%`}}/>
+            <span style={{width: `${calculateRating(rating)}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

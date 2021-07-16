@@ -1,8 +1,9 @@
 import React from 'react';
+import './spinner.css';
 
 function LoadingScreen() {
   return (
-    <p>Loading ...</p>
+    <div className="lds-circle"><div></div></div>
   );
 }
 

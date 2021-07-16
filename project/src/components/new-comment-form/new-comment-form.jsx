@@ -25,32 +25,34 @@ function NewCommentForm(props) {
   const { id } = useParams();
   const defaultValue = { comment: '', rating: null };
   const [newComment, setValue] = useState(defaultValue);
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [isFormDisabled, setDisabled] = useState(false);
   const formRef = useRef();
   const dispatch = useDispatch();
 
-  let isFormChecked =
+  const isFormChecked =
     newComment.rating !== null &&
     newComment.comment.length >= MIN_COMMENT_LENGTH &&
     newComment.comment.length <= MAX_COMMENT_LENGTH;
 
-  let isSubmitting = false;
 
   const onFormSubmit = (evt) => {
     evt.preventDefault();
-    isFormChecked = false;
-    isSubmitting = true;
+    setDisabled(true);
+    setSubmitting(true);
 
     dispatch(postComment(id, newComment))
       .then(({data}) => {
         dispatch(loadReviews(data));
-        isSubmitting = false;
+        setSubmitting(true);
+        setDisabled(false);
         setValue(defaultValue);
-        isFormChecked = true;
+
         formRef.current.reset();
       })
       .catch(() => {
-        isSubmitting = false;
-        isFormChecked = true;
+        setSubmitting(false);
+        setDisabled(false);
         toast.error('Sorry, your comment was not sent. Please, try again later.', {
           position: 'top-center',
           autoClose: 5000,
@@ -71,7 +73,7 @@ function NewCommentForm(props) {
         <p className="reviews__help">
                       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={!isFormChecked}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isFormDisabled || !isFormChecked}>Submit</button>
       </div>
     </form>
   );

@@ -1,12 +1,10 @@
-import { setEmail, loadAdCards, loadOneCard, loadApartmentsNear, loadFavoriteList, loadReviews, redirectToRoute, requireAuthorization, logoutApp } from './action';
+import { setEmail, loadAdCards, loadOneCard, loadApartmentsNear, loadFavoriteList, loadReviews, redirectToRoute, requireAuthorization, logoutApp, updateFavoriteList } from './action';
 import { AuthorizationStatus, ApiRoute, AppRoute } from '../constants';
 
 export const fetchAdCardsList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.HOTELS)
     .then(({ data }) => dispatch(loadAdCards(data)))
-    .catch((response) => {
-      throw new Error(`${response.status}: ${response.statusText}`);
-    })
+    .catch(() =>dispatch(loadAdCards([])))
 );
 
 export const fetchOneAdCard = (id) => (dispatch, _getState, api) => (
@@ -25,16 +23,11 @@ export const fetchApartmentsNear = (id) => (dispatch, _getState, api) => (
 export const fetchFavoriteList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.FAVORITE)
     .then(({ data }) => dispatch(loadFavoriteList(data)))
-    .catch((response) => {
-      throw new Error(`${response.status}: ${response.statusText}`);
-    })
 );
 
-export const changeFavoriteList = () => (dispatch, _getState, api) => (
-  // реализован частично
-  // POST /favorite/: hotel_id/: status
-  api.post(ApiRoute.FAVORITE)
-    .then(({ data }) => dispatch(changeFavoriteList(data)))
+export const changeFavoriteList = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${ApiRoute.FAVORITE}/${id}/${status}`)
+    .then(({ data }) => dispatch(updateFavoriteList(data)))
     .catch((response) => {
       throw new Error(`${response.status}: ${response.statusText}`);
     })
@@ -52,8 +45,6 @@ export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
     .then(({ data }) => dispatch(setEmail(data.email)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    // проверить ТЗ нужно ли обрабатывать как-то зареджекшенный запрос
-    .catch(() => {})
 );
 
 export const login = ({email, password}) => (dispatch, _getState, api) => (

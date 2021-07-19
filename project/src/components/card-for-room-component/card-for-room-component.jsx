@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { calculateRating } from '../../utils/utils';
 function CardInRoom(props) {
 
   const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = props;
@@ -29,7 +29,7 @@ function CardInRoom(props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating * 20}%`}}/>
+            <span style={{width: `${calculateRating(rating)}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -6,13 +6,16 @@ import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
-import { checkReviews, getDate } from '../../utils/utils';
-import { initRoom } from './action/init-room';
+import { checkReviews, getDate, calculateRating } from '../../utils/utils';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../constants';
-import { setActiveCard } from '../../store/action';
+import { setActiveCard, redirectToRoute } from '../../store/action';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { getActiveCard, getApartmentsNear, getReviews } from '../../store/app-data/selectors';
+import { changeFavoriteList, fetchApartmentsNear, fetchOneAdCard, fetchCommentsList  } from '../../store/api-actions';
+import { AppRoute, Status, Toast  } from '../../constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MAX_IMAGE_COUNT = 6;
 
@@ -22,7 +25,15 @@ function Room(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initRoom(id));
+    dispatch(fetchOneAdCard(id));
+    dispatch(fetchApartmentsNear(id));
+    dispatch(fetchCommentsList(id))
+      .catch(() => {
+        toast.error('Cant load reviews for this apartments', {
+          position: Toast.POSITION,
+          autoClose: Toast.AUTO_CLOSE_TIME,
+        });
+      });
     dispatch(setActiveCard(Number(id)));
   }, [id]);
 
@@ -40,10 +51,21 @@ function Room(props) {
   const sortedReviews = checkReviews(reviews);
   const { isPremium, images, price, isFavorite, rating, title, type, bedrooms, description, goods, maxAdults, host: { avatarUrl, isPro, userName }} = activeCard;
 
+  const onFavoriteButtonClick = () => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      const status = isFavorite ? Status.UNFAVORITE : Status.FAVORITE;
+      dispatch(changeFavoriteList(id, status))
+        .then(() => dispatch(fetchOneAdCard(id)));
+    } else {
+      dispatch(redirectToRoute(AppRoute.LOGIN));
+    }
+  };
+
   return (
     <div className="page">
       <Header authorizationStatus={authorizationStatus} />
       <main className="page__main page__main--property">
+        <ToastContainer />
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
@@ -60,7 +82,7 @@ function Room(props) {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button'} type="button">
+                <button onClick={onFavoriteButtonClick} className={isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button'} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -69,7 +91,7 @@ function Room(props) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${rating * 20}%` }}></span>
+                  <span style={{width: `${calculateRating(rating)}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>

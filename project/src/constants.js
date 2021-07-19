@@ -65,3 +65,13 @@ export const sortTypes = [
   'Price: high to low',
   'Top rated first',
 ];
+
+export const Status = {
+  FAVORITE: 1,
+  UNFAVORITE: 0,
+};
+
+export const Toast = {
+  POSITION: 'top-center',
+  AUTO_CLOSE_TIME: 3000,
+};

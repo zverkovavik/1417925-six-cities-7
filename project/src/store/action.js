@@ -6,7 +6,7 @@ export const ActionType = {
   LOAD_ONE_CARD: 'data/load-one-card',
   LOAD_APARTMENTS_NEAR: 'data/load-apartments-near',
   LOAD_FAVORITE_LIST: 'data/load-favorite-list',
-  CHANGE_FAVORITE_LIST: 'data/change-favorite-list',
+  UPDATE_FAVORITE_LIST: 'data/update-favorite-list',
   LOAD_REVIEWS: 'data/load-reviews',
   POST_COMMENT: 'data/post-comment',
   REQUIRED_AUTHORIZATION: 'user/required-authorization',
@@ -40,7 +40,7 @@ export const loadFavoriteList = createAction(ActionType.LOAD_FAVORITE_LIST, (lis
   payload: list,
 }));
 
-export const changeFavoriteList = createAction(ActionType.CHANGE_FAVORITE_LIST, (changedCard) => ({
+export const updateFavoriteList = createAction(ActionType.UPDATE_FAVORITE_LIST, (changedCard) => ({
   payload: changedCard,
 }));
 

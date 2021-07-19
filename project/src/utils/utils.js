@@ -13,7 +13,7 @@ const sortLowToHighPrice = (array) => array.sort((adA, adB) => adA.price - adB.p
 const sortByRating = (array) => array.sort((adA, adB) => adB.rating - adA.rating);
 
 export const checkReviews = (array) => {
-  
+
   let sortedReviews = array;
   if (array) {
     sortedReviews = sortByDate(array);
@@ -43,3 +43,5 @@ export const getSortData = (currentList, currentSortType, activeSortType) => {
       return currentAdsList;
   }
 };
+
+export const calculateRating = (rating) => Math.round(rating) * 20;

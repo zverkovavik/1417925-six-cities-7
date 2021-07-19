@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Header from '../../components/header/header';
 import { getAdsList } from '../../store/app-data/selectors';
 import { getAuthorizationStatus } from '../../store/user/selectors';
+import MainPageEmpty from '../../components/main-page-empty/main-page-empty';
 
 function MainPage(props) {
 
@@ -26,10 +27,10 @@ function MainPage(props) {
           </div>
           <div className="cities">
             <div className="cities__places-container container">
-              <OffersList />
+              {adsList.length ? <OffersList /> : <MainPageEmpty />}
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map adsList={adsList} />
+                  {adsList.length && (<Map adsList={adsList} />)}
                 </section>
               </div>
             </div>

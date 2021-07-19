@@ -13,7 +13,7 @@ import PrivateRouteToLogin from '../private-route-to-login/private-route-to-logi
 import browserHistory from '../../browser-history';
 import { init } from './actions/init';
 import { getAuthorizationStatus } from '../../store/user/selectors';
-import { getLoadedDataStatus } from '../../store/app-data/selectors';
+import { getLoadedDataStatus } from '../../store/data/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
 function App(props) {

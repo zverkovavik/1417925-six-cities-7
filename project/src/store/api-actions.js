@@ -10,9 +10,7 @@ export const fetchAdCardsList = () => (dispatch, _getState, api) => (
 export const fetchOneAdCard = (id) => (dispatch, _getState, api) => (
   api.get(`${ApiRoute.HOTELS}/${id}`)
     .then(({ data }) => dispatch(loadOneCard(data)))
-    .catch(() => {
-      dispatch(redirectToRoute(AppRoute.NOT_FOUND));
-    })
+    .catch(() => dispatch(redirectToRoute(AppRoute.NOT_FOUND)))
 );
 
 export const fetchApartmentsNear = (id) => (dispatch, _getState, api) => (
@@ -28,9 +26,6 @@ export const fetchFavoriteList = () => (dispatch, _getState, api) => (
 export const changeFavoriteList = (id, status) => (dispatch, _getState, api) => (
   api.post(`${ApiRoute.FAVORITE}/${id}/${status}`)
     .then(({ data }) => dispatch(updateFavoriteList(data)))
-    .catch((response) => {
-      throw new Error(`${response.status}: ${response.statusText}`);
-    })
 );
 
 export const fetchCommentsList = (id) => (dispatch, _getState, api) => (

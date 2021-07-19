@@ -4,7 +4,7 @@ import FooterLogo from '../../components/footer-logo/footer-logo';
 import Header from '../../components/header/header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user/selectors';
-import {  getCards, getFavoriteList } from '../../store/app-data/selectors';
+import {  getCards, getFavoriteList } from '../../store/data/selectors';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { fetchFavoriteList } from '../../store/api-actions';
 import FavoritesEmpty from '../../components/favorite-empty/favorites-empty';

@@ -1,9 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { adaptToClient, adaptToClientCardsArray, adaptToClientReviewsArray } from '../../utils/adapter';
 import { filterCardsByCurrentCity, updateCards } from './selectors';
-import { changeCity, loadAdCards, loadReviews, loadOneCard, loadFavoriteList, loadApartmentsNear, updateFavoriteList, setSortType, resetSortType } from '../action';
+import { changeCity, loadAdCards, loadReviews, loadOneCard, loadFavoriteList, loadApartmentsNear, updateFavoriteList, setSortType, resetSortType, setActiveCard, resetActiveCard  } from '../action';
 import { getSortData } from '../../utils/utils';
 import { City, SortType } from '../../constants';
+
+const EMPTY_ACTIVE_CARD = 0;
 
 const initialState = {
   city: City.PARIS,
@@ -11,13 +13,14 @@ const initialState = {
   adsList: [],
   isDataLoaded: false,
   activeCard: null,
+  activeCardId: EMPTY_ACTIVE_CARD,
   favoriteList: [],
   apartmentsNear: [],
   reviews: [],
   sortType: SortType.POPULAR,
 };
 
-const appData = createReducer(initialState, (builder) => {
+const data = createReducer(initialState, (builder) => {
   builder
     .addCase(loadAdCards, (state, action) => {
       state.cards = adaptToClientCardsArray(action.payload);
@@ -51,7 +54,13 @@ const appData = createReducer(initialState, (builder) => {
     })
     .addCase(resetSortType, (state) => {
       state.sortType = SortType.POPULAR;
+    })
+    .addCase(setActiveCard, (state, action) => {
+      state.activeCardId = action.payload;
+    })
+    .addCase(resetActiveCard, (state) => {
+      state.activeCardId = EMPTY_ACTIVE_CARD;
     });
 });
 
-export { appData };
+export { data };

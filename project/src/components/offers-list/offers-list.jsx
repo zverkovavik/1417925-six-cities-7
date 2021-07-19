@@ -2,7 +2,7 @@ import React from 'react';
 import SortTypeMenu from '../sort-type-menu/sort-type-menu';
 import Card from '../card/card';
 import {  useSelector } from 'react-redux';
-import { getAdsList, getCity, getSortType } from '../../store/app-data/selectors';
+import { getAdsList, getCity, getSortType } from '../../store/data/selectors';
 
 function OffersList(props) {
 

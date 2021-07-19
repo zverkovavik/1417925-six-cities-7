@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getCity } from '../../store/app-data/selectors';
+import { getCity } from '../../store/data/selectors';
 
 function MainPageEmpty(props) {
   const city = useSelector(getCity);

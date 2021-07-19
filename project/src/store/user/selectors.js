@@ -4,4 +4,3 @@ export const getAuthorizationStatus = (state) =>  state[NameSpace.USER].authoriz
 
 export const getLogin = (state) =>  state[NameSpace.USER].login;
 
-export const getActiveCardId = (state) =>  state[NameSpace.USER].activeCardId;

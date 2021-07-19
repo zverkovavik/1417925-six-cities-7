@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveCard, resetActiveCard, redirectToRoute } from '../../store/action';
-import { getActiveCardId } from '../../store/user/selectors';
+import { getActiveCardId } from '../../store/data/selectors';
 import { changeFavoriteList } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user/selectors';
-import { AuthorizationStatus, AppRoute } from '../../constants';
+import { AuthorizationStatus, AppRoute, Status, Toast } from '../../constants';
 import { calculateRating } from '../../utils/utils';
-import { Status } from '../../constants';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Card(props) {
 
@@ -28,7 +29,13 @@ function Card(props) {
   const onFavoriteButtonClick = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       const status = isFavorite ? Status.UNFAVORITE : Status.FAVORITE;
-      dispatch(changeFavoriteList(id, status));
+      dispatch(changeFavoriteList(id, status))
+        .catch(() => {
+          toast.error(Toast.USUAL_ERROR_MESSAGE, {
+            position: Toast.POSITION,
+            autoClose: Toast.AUTO_CLOSE_TIME,
+          });
+        });
     } else {
       dispatch(redirectToRoute(AppRoute.LOGIN));
     }
@@ -37,6 +44,7 @@ function Card(props) {
   return (
     <article onMouseOver={() => onCardMouseOver(id)} onMouseOut={onCardMouseOut} className="cities__place-card place-card">
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '' }
+      <ToastContainer />
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${activeCardId}`}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt="Place" />

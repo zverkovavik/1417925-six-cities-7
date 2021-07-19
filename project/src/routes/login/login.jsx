@@ -16,7 +16,7 @@ function LoginScreen() {
   const onSubmit = (authData) => {
     dispatch(login(authData))
       .catch(() => {
-        toast.error('Something went wrong. Please try again later.', {
+        toast.error(Toast.USUAL_ERROR_MESSAGE, {
           position: Toast.POSITION,
           autoClose: Toast.AUTO_CLOSE_TIME,
         });
@@ -29,7 +29,7 @@ function LoginScreen() {
   const onPasswordInput = () => {
     if ((passwordRef.current.value).slice(0,1) === ' ') {
       passwordRef.current.value = '';
-      toast.error('Password cannot start with a space or consist only of spaces.', {
+      toast.error(Toast.SPACE_PASSWORD_ERROR, {
         position: Toast.POSITION,
         autoClose: Toast.AUTO_CLOSE_TIME,
       });
@@ -39,7 +39,7 @@ function LoginScreen() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!emailRef.current.value.includes('@')) {
-      toast.error('Please enter correct email.', {
+      toast.error(Toast.EMAIL_ERROR, {
         position: Toast.POSITION,
         autoClose: Toast.AUTO_CLOSE_TIME,
       });
@@ -47,7 +47,7 @@ function LoginScreen() {
     }
 
     if (passwordRef.current.value.length <= 3) {
-      toast.error('Password should contain more then 3 symbols.', {
+      toast.error(Toast.LENGTH_PASSWORD_ERROR, {
         position: Toast.POSITION,
         autoClose: Toast.AUTO_CLOSE_TIME,
       });

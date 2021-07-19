@@ -2,7 +2,7 @@ import React from 'react';
 import { City } from '../../constants';
 import { changeCity } from '../../store/action';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCity } from '../../store/app-data/selectors';
+import { getCity } from '../../store/data/selectors';
 import { resetSortType } from '../../store/action';
 
 function CitiesList(props) {

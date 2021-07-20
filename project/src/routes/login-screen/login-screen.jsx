@@ -77,11 +77,28 @@ function LoginScreen() {
             <form className="login__form form" action="#" method="post">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input ref={emailRef} className="login__input form__input" type="email" name="email" placeholder="Email" required="" />
+                <input
+                  ref={emailRef}
+                  className="login__input form__input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  data-testid="login"
+                  required=""
+                />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input ref={passwordRef} onInput={onPasswordInput} className="login__input form__input" type="password" name="password" placeholder="Password" autoComplete="off" required="" />
+                <input
+                  ref={passwordRef}
+                  onInput={onPasswordInput}
+                  className="login__input form__input"
+                  type="password" name="password"
+                  placeholder="Password"
+                  autoComplete="off"
+                  data-testid="password"
+                  required=""
+                />
               </div>
               <button onClick={handleSubmit} className="login__submit form__submit button" type="submit">Sign in</button>
             </form>

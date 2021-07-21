@@ -2,22 +2,21 @@
 import { createAction } from '@reduxjs/toolkit';
 
 export const ActionType = {
+  CHANGE_CITY: 'data/change-city',
   LOAD_AD_CARDS: 'data/load-ad-cards',
   LOAD_ONE_CARD: 'data/load-one-card',
   LOAD_APARTMENTS_NEAR: 'data/load-apartments-near',
   LOAD_FAVORITE_LIST: 'data/load-favorite-list',
   UPDATE_FAVORITE_LIST: 'data/update-favorite-list',
   LOAD_REVIEWS: 'data/load-reviews',
-  POST_COMMENT: 'data/post-comment',
+  SET_EMAIL: 'user/set-email',
   REQUIRED_AUTHORIZATION: 'user/required-authorization',
   LOGOUT: 'user/log-out',
-  SET_EMAIL: 'user/set-email',
   REDIRECT_TO_ROUTE: 'redirect-to-route',
-  CHANGE_CITY: 'change-city',
-  SET_ACTIVE_CARD: 'set-active-card',
-  RESET_ACTIVE_CARD: 'reset-active-card',
-  SET_SORT_TYPE: 'set-sort-type',
-  RESET_SORT_TYPE: 'reset-sort-type',
+  SET_ACTIVE_CARD: 'data/set-active-card',
+  RESET_ACTIVE_CARD: 'data/reset-active-card',
+  SET_SORT_TYPE: 'data/set-sort-type',
+  RESET_SORT_TYPE: 'data/reset-sort-type',
 };
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (currentCity) => ({

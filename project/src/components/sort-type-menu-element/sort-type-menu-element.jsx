@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSortType } from '../../store/action';
-import { getSortType } from '../../store/app-data/selectors';
+import { getSortType } from '../../store/data/selectors';
 
 function SortTypeMenuElement(props) {
 

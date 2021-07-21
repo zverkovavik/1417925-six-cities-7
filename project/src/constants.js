@@ -74,4 +74,8 @@ export const Status = {
 export const Toast = {
   POSITION: 'top-center',
   AUTO_CLOSE_TIME: 3000,
+  USUAL_ERROR_MESSAGE: 'Something went wrong. Please try again later.',
+  SPACE_PASSWORD_ERROR: 'Password cannot start with a space or consist only of spaces.',
+  LENGTH_PASSWORD_ERROR: 'Password should contain more then 3 symbols.',
+  EMAIL_ERROR: 'Please enter correct email.',
 };

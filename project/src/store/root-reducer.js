@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { user } from './user/user';
-import { appData } from './app-data/app-data';
+import { data } from './data/data';
 
 export const NameSpace = {
   DATA: 'DATA',
@@ -8,6 +8,6 @@ export const NameSpace = {
 };
 
 export default combineReducers({
-  [NameSpace.DATA]: appData,
+  [NameSpace.DATA]: data,
   [NameSpace.USER]: user,
 });

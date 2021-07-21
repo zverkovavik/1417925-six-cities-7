@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateRating } from '../../utils/utils';
-import { getActiveCardId } from '../../store/user/selectors';
+import { getActiveCardId } from '../../store/data/selectors';
 import { setActiveCard, resetActiveCard } from '../../store/action';
 import { changeFavoriteList } from '../../store/api-actions';
 import { Status } from '../../constants';

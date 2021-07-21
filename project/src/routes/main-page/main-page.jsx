@@ -4,7 +4,7 @@ import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { useSelector } from 'react-redux';
 import Header from '../../components/header/header';
-import { getAdsList } from '../../store/app-data/selectors';
+import { getAdsList } from '../../store/data/selectors';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import MainPageEmpty from '../../components/main-page-empty/main-page-empty';
 

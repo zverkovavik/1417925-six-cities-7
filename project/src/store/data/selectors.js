@@ -32,7 +32,4 @@ export const updateCards = (cards, updatedCard) => {
   return updatedCards;
 };
 
-export const createFavoriteList = (list) => {
-  // const set = new Set(list.map((element) => element.city.name));
-  // функция возвращает массив с объектами: [{ cityName: string, cards: [ ]}]
-};
+export const getActiveCardId = (state) =>  state[NameSpace.DATA].activeCardId;

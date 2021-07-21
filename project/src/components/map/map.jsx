@@ -5,8 +5,8 @@ import useMap from '../../hooks/use-map';
 import { useSelector } from 'react-redux';
 import { getCardWithTheSameId } from '../../utils/utils';
 import offersInMap from '../../prop-types/offers-used-in-map';
-import { getActiveCardId } from '../../store/user/selectors';
-import { getCards, filterCardsByCurrentCity, getCity } from '../../store/app-data/selectors';
+import { getActiveCardId } from '../../store/data/selectors';
+import { getCards, filterCardsByCurrentCity, getCity } from '../../store/data/selectors';
 
 const FIRST_ARRAY_ELEMENT = 0;
 const MarkerUrl = {

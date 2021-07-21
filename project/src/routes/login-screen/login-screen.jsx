@@ -16,7 +16,7 @@ function LoginScreen() {
   const onSubmit = (authData) => {
     dispatch(login(authData))
       .catch(() => {
-        toast.error('Something went wrong. Please try again later.', {
+        toast.error(Toast.USUAL_ERROR_MESSAGE, {
           position: Toast.POSITION,
           autoClose: Toast.AUTO_CLOSE_TIME,
         });
@@ -29,7 +29,7 @@ function LoginScreen() {
   const onPasswordInput = () => {
     if ((passwordRef.current.value).slice(0,1) === ' ') {
       passwordRef.current.value = '';
-      toast.error('Password cannot start with a space or consist only of spaces.', {
+      toast.error(Toast.SPACE_PASSWORD_ERROR, {
         position: Toast.POSITION,
         autoClose: Toast.AUTO_CLOSE_TIME,
       });
@@ -39,7 +39,7 @@ function LoginScreen() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!emailRef.current.value.includes('@')) {
-      toast.error('Please enter correct email.', {
+      toast.error(Toast.EMAIL_ERROR, {
         position: Toast.POSITION,
         autoClose: Toast.AUTO_CLOSE_TIME,
       });
@@ -47,7 +47,7 @@ function LoginScreen() {
     }
 
     if (passwordRef.current.value.length <= 3) {
-      toast.error('Password should contain more then 3 symbols.', {
+      toast.error(Toast.LENGTH_PASSWORD_ERROR, {
         position: Toast.POSITION,
         autoClose: Toast.AUTO_CLOSE_TIME,
       });
@@ -77,11 +77,28 @@ function LoginScreen() {
             <form className="login__form form" action="#" method="post">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input ref={emailRef} className="login__input form__input" type="email" name="email" placeholder="Email" required="" />
+                <input
+                  ref={emailRef}
+                  className="login__input form__input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  data-testid="login"
+                  required=""
+                />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input ref={passwordRef} onInput={onPasswordInput} className="login__input form__input" type="password" name="password" placeholder="Password" autoComplete="off" required="" />
+                <input
+                  ref={passwordRef}
+                  onInput={onPasswordInput}
+                  className="login__input form__input"
+                  type="password" name="password"
+                  placeholder="Password"
+                  autoComplete="off"
+                  data-testid="password"
+                  required=""
+                />
               </div>
               <button onClick={handleSubmit} className="login__submit form__submit button" type="submit">Sign in</button>
             </form>

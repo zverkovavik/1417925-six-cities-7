@@ -11,7 +11,7 @@ import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../constants';
 import { setActiveCard, redirectToRoute } from '../../store/action';
 import { getAuthorizationStatus } from '../../store/user/selectors';
-import { getActiveCard, getApartmentsNear, getReviews } from '../../store/app-data/selectors';
+import { getActiveCard, getApartmentsNear, getReviews } from '../../store/data/selectors';
 import { changeFavoriteList, fetchApartmentsNear, fetchOneAdCard, fetchCommentsList  } from '../../store/api-actions';
 import { AppRoute, Status, Toast  } from '../../constants';
 import { ToastContainer, toast } from 'react-toastify';
@@ -55,7 +55,13 @@ function Room(props) {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       const status = isFavorite ? Status.UNFAVORITE : Status.FAVORITE;
       dispatch(changeFavoriteList(id, status))
-        .then(() => dispatch(fetchOneAdCard(id)));
+        .then(() => dispatch(fetchOneAdCard(id)))
+        .catch(() => {
+          toast.error(Toast.USUAL_ERROR_MESSAGE, {
+            position: Toast.POSITION,
+            autoClose: Toast.AUTO_CLOSE_TIME,
+          });
+        });
     } else {
       dispatch(redirectToRoute(AppRoute.LOGIN));
     }

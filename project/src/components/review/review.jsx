@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { calculateRating } from '../../utils/utils';
 
 function Review(props) {
 
@@ -18,7 +19,7 @@ function Review(props) {
         <div className="reviews__info">
           <div className="reviews__rating rating">
             <div className="reviews__stars rating__stars">
-              <span style={{width: `${rating * 20}%`}}></span>
+              <span style={{width: `${calculateRating(rating)}%`}}></span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
@@ -39,7 +40,6 @@ Review.propTypes = {
   rating: PropTypes.number.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   authorName: PropTypes.string.isRequired,
-
 };
 
 export default Review;

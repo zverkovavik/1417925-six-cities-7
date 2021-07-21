@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import MainPage from '../../routes/main-page/main-page';
+import MainPage from '../main-page/main-page';
 import { Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../constants';
-import LoginScreen from '../../routes/login-screen/login-screen';
-import Favorites from '../../routes/favorites/favorites';
-import Room from '../../routes/room/room';
-import NotFoundScreen from '../../routes/not-found-screen/not-found-screen';
+import LoginScreen from '../login-screen/login-screen';
+import Favorites from '../favorites/favorites';
+import Room from '../room/room';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../utils/utils';
 import PrivateRouteToFavorite from '../private-route-to-favorite/private-route-to-favorite';

@@ -6,7 +6,7 @@ export const AppRoute = {
   NOT_FOUND: '/not-found',
 };
 
-export const ratingForm = [
+export const ratingForms = [
   {
     numberValue: 5,
     definition: 'perfect',

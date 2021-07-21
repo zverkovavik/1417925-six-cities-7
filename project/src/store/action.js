@@ -10,6 +10,7 @@ export const ActionType = {
   UPDATE_FAVORITE_LIST: 'data/update-favorite-list',
   LOAD_REVIEWS: 'data/load-reviews',
   SET_EMAIL: 'user/set-email',
+  SET_AVATAR_URL: 'user/set-avatar-url',
   REQUIRED_AUTHORIZATION: 'user/required-authorization',
   LOGOUT: 'user/log-out',
   REDIRECT_TO_ROUTE: 'redirect-to-route',
@@ -49,6 +50,10 @@ export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
 
 export const setEmail = createAction(ActionType.SET_EMAIL, (email) => ({
   payload: email,
+}));
+
+export const setAvatarUrl = createAction(ActionType.SET_AVATAR_URL, (url) => ({
+  payload: url,
 }));
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({

@@ -1,9 +1,8 @@
 import React,  { useEffect, useState }  from 'react';
 import { Link } from 'react-router-dom';
-import FooterLogo from '../../components/footer-logo/footer-logo';
+import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuthorizationStatus } from '../../store/user/selectors';
 import {  getCards, getFavoriteList } from '../../store/data/selectors';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { fetchFavoriteList } from '../../store/api-actions';
@@ -14,7 +13,6 @@ import { changeCity } from '../../store/action';
 function Favorites(props) {
 
   const dispatch = useDispatch();
-  const authorizationStatus = useSelector(getAuthorizationStatus);
   const favoriteList = useSelector(getFavoriteList);
   const cards = useSelector(getCards);
   const [isDataLoaded, setLoadingDataStatus] = useState(false);
@@ -39,7 +37,7 @@ function Favorites(props) {
 
   return (
     <div className="page">
-      <Header authorizationStatus={authorizationStatus} />
+      <Header />
       {!favoriteList.length ? <FavoritesEmpty isError={isError}/> : (
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
@@ -74,7 +72,7 @@ function Favorites(props) {
             </section>
           </div>
         </main>)}
-      <FooterLogo />
+      <Footer />
     </div>);
 }
 

@@ -15,7 +15,8 @@ import
   resetActiveCard,
   setSortType,
   resetSortType,
-  ActionType
+  ActionType,
+  setAvatarUrl
 } from './action';
 
 const TEST_CARD =  {
@@ -145,6 +146,17 @@ describe('Actions', () => {
       payload: TEST_EMAIL,
     };
     expect(setEmail(TEST_EMAIL)).toEqual(expectedAction);
+  });
+
+  it('Action creator for set user avatar returns action with payload containing user avatar', () => {
+
+    const TEST_DATA = 'img/avatar.jpg';
+
+    const expectedAction = {
+      type: ActionType.SET_AVATAR_URL,
+      payload: TEST_DATA,
+    };
+    expect(setAvatarUrl(TEST_DATA)).toEqual(expectedAction);
   });
 
   it('Action creator for authorization request returns action with payload', () => {

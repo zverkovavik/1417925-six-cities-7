@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ratingForm } from '../../constants';
+import { ratingForms } from '../../constants';
 import { postComment } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -66,7 +66,7 @@ function NewCommentForm(props) {
       <ToastContainer />
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div  onClick={(evt) => setValue({ ...newComment, rating: evt.target.value})} className="reviews__rating-form form__rating" >
-        {ratingForm.map((ratingFormElement) => createRatingForm(ratingFormElement.numberValue, ratingFormElement.definition))}
+        {ratingForms.map((ratingFormElement) => createRatingForm(ratingFormElement.numberValue, ratingFormElement.definition))}
       </div>
       <textarea minLength={MIN_COMMENT_LENGTH} maxLength={MAX_COMMENT_LENGTH} onChange={(evt) => setValue({ ...newComment, comment: evt.target.value})} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" required></textarea>
       <div className="reviews__button-wrapper">

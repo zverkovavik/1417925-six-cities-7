@@ -1,5 +1,5 @@
 import React from 'react';
-import FooterLogo from '../../components/footer-logo/footer-logo';
+import Footer from '../../components/footer/footer';
 
 function NotFoundScreen(props) {
   return (
@@ -8,7 +8,7 @@ function NotFoundScreen(props) {
         <h1>Ooops.. Error 404. Page not found.</h1>
         <p style={{fontSize: '24px' }}>Press on the logo to return on the main page</p>
       </main>
-      <FooterLogo />
+      <Footer />
     </>
   );
 }

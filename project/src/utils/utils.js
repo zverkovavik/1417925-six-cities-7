@@ -2,6 +2,8 @@ import { AuthorizationStatus, SortType } from '../constants';
 import dayjs from 'dayjs';
 
 const REVIEW_COUNT = 10;
+const FIRST_LETTER_INDEX = 0;
+const SECOND_LETTER_INDEX = 1;
 export const isCheckedAuth = (authorizationStatus) => authorizationStatus === AuthorizationStatus.UNKNOWN;
 
 export const getCardWithTheSameId = (array, id) => array.filter((element) => element.id === id);
@@ -45,3 +47,5 @@ export const getSortData = (currentList, currentSortType, activeSortType) => {
 };
 
 export const calculateRating = (rating) => Math.round(rating) * 20;
+
+export const capitalizeFirstLetter = (string) => string[FIRST_LETTER_INDEX].toUpperCase() + string.slice(SECOND_LETTER_INDEX);

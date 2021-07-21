@@ -41,3 +41,14 @@ export const adaptToClientReviewsArray = (reviews) => {
   });
   return adaptedReviews;
 };
+
+export const adaptToClientData = (data) => {
+  const adaptedData = Object.assign(
+    {},
+    data,
+    {
+      avatarUrl: data.avatar_url,
+    });
+  delete adaptedData.avatar_url;
+  return adaptedData;
+};

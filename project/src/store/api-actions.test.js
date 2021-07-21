@@ -24,8 +24,8 @@ describe('Async operations', () => {
   it('should make a correct API call to GET /login', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const fakeUser = {email: 'test@test.ru', password: '123456'};
-
+    const fakeUser = {email: 'test@test.ru', password: '123456', 'avatar_url': 'img.png'};
+    const adaptedfakeUser = { avatarUrl: 'img.png'};
     const checkAuthLoader = checkAuth();
 
     apiMock
@@ -34,12 +34,16 @@ describe('Async operations', () => {
 
     return checkAuthLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenCalledTimes(3);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_EMAIL,
           payload: fakeUser.email,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.SET_AVATAR_URL,
+          payload: adaptedfakeUser.avatarUrl,
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: ActionType.REQUIRED_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
         });
@@ -49,16 +53,16 @@ describe('Async operations', () => {
   it('should make a correct API call to POST /login', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const fakeUser = {email: 'test@test.ru', password: '123456'};
+    const fakeUser = {email: 'test@test.ru', password: '123456', 'avatar_url': 'img.png'};
     const loginLoader = login(fakeUser);
-
+    const adaptedfakeUser = { avatarUrl: 'img.png'};
     apiMock
       .onPost(ApiRoute.LOGIN)
       .reply(200, fakeUser);
 
     return loginLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(4);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_EMAIL,
@@ -66,11 +70,16 @@ describe('Async operations', () => {
         });
 
         expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.SET_AVATAR_URL,
+          payload: adaptedfakeUser.avatarUrl,
+        });
+
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: ActionType.REQUIRED_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
         });
 
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
+        expect(dispatch).toHaveBeenNthCalledWith(4, {
           type: ActionType.REDIRECT_TO_ROUTE,
           payload: AppRoute.ROOT,
         });

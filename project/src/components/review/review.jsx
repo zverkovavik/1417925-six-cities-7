@@ -6,13 +6,13 @@ function Review(props) {
 
   const { comment, date, rating, avatarUrl, authorName } = props;
   return (
-    <ul className="reviews__list">
+    <ul className="reviews__list" data-testid="comment-list">
       <li className="reviews__item">
         <div className="reviews__user user">
           <div className="reviews__avatar-wrapper user__avatar-wrapper">
             <img className="reviews__avatar user__avatar" src={avatarUrl} width="54" height="54" alt="Reviews avatar" />
           </div>
-          <span className="reviews__user-name">
+          <span className="reviews__user-name" data-testid="review-author">
             {authorName}
           </span>
         </div>

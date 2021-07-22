@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FavoritesEmpty(props) {
+function FavoriteEmptyList(props) {
   const { isError } = props;
 
   return (
-    <main className="page__main page__main--favorites page__main--favorites-empty">
+    <main
+      className="page__main page__main--favorites page__main--favorites-empty" data-testid="favorites-list-is-empty"
+    >
       <div className="page__favorites-container container">
         <section className="favorites favorites--empty">
           <h1 className="visually-hidden">Favorites (empty)</h1>
@@ -24,8 +26,8 @@ function FavoritesEmpty(props) {
   );
 }
 
-FavoritesEmpty.propTypes = {
+FavoriteEmptyList.propTypes = {
   isError: PropTypes.bool.isRequired,
 };
 
-export default FavoritesEmpty;
+export default FavoriteEmptyList;

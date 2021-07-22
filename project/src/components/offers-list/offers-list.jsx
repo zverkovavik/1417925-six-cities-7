@@ -11,7 +11,7 @@ function OffersList(props) {
   const sortType = useSelector(getSortType);
 
   return (
-    <section className="cities__places places">
+    <section className="cities__places places" data-testid="offers-list">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">{adsList.length} places to stay in {city}</b>
       <SortTypeMenu sortType={sortType} />

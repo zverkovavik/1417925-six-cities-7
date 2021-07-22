@@ -11,7 +11,6 @@ let history = null;
 let store = null;
 const mockStore = configureStore({});
 
-
 describe('Component: CitiesList', () => {
   beforeAll(() => {
     history = createMemoryHistory();

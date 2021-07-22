@@ -54,7 +54,7 @@ function FavoriteCard(props) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${activeCardId}`} href="/">{title}</Link>
+          <Link to={`/offer/${activeCardId}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

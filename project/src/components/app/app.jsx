@@ -3,7 +3,6 @@ import MainPage from '../main-page/main-page';
 import { Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../constants';
 import LoginScreen from '../login-screen/login-screen';
-import Favorites from '../favorites/favorites';
 import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -14,6 +13,7 @@ import { init } from './actions/init';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { getLoadedDataStatus } from '../../store/data/selectors';
 import { useDispatch, useSelector } from 'react-redux';
+import FavoriteList from '../favorite-list/favorite-list';
 
 function App(props) {
 
@@ -37,7 +37,7 @@ function App(props) {
         <MainPage />;
       </Route>
       <PrivateRouteToLogin exact path={AppRoute.LOGIN} render={() => <LoginScreen />} />
-      <PrivateRouteToFavorite exact path={AppRoute.FAVORITES} render={() => <Favorites />} />
+      <PrivateRouteToFavorite exact path={AppRoute.FAVORITES} render={() => <FavoriteList />} />
       <Route exact path={AppRoute.ROOM}>
         <Room />
       </Route>

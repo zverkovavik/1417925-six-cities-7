@@ -4,37 +4,47 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import OffersList from './offers-list';
 import { AuthorizationStatus } from '../../constants';
-import NavListForAuth from './nav-list-for-auth';
 
 let history = null;
 let store = null;
 const mockStore = configureStore({});
+const TEST_CARD =  {
+  id: 1,
+  'isFavorite': true,
+  'isPremium': false,
+  'previewImage': 'img/room.jpg',
+  price: 80,
+  rating: 4,
+  title: 'Wood and stone place',
+  type: 'Private room',
+};
 
-
-describe('Component: NavListForAuth', () => {
+describe('Component: OffersList', () => {
   beforeAll(() => {
     history = createMemoryHistory();
   });
 
-  it('should render correctly for logged in user', () => {
+  it('should render correctly', () => {
     store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,
-        login: 'test@test.com',
-        avatarUrl: 'test avatar',
+      },
+      DATA: {
+        city: 'London',
+        adsList: [TEST_CARD],
+        sortType: 'Popular',
       },
     });
     render(
       <Provider store={store}>
         <Router history={history}>
-          <NavListForAuth />
+          <OffersList />
         </Router>
       </Provider>);
 
-    expect(screen.getByTestId(/user-email/i)).toBeInTheDocument();
-    expect(screen.getByTestId(/user-email/i)).toHaveTextContent('test@test.com');
-    expect(screen.getByTestId(/sign-out/i)).toBeInTheDocument();
-    expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/offers-list/i)).toBeInTheDocument();
+    expect(screen.getByText(/1 places to stay in London/i)).toBeInTheDocument();
   });
 });

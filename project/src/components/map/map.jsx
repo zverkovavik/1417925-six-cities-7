@@ -71,7 +71,7 @@ function Map(props) {
   }, [map, adsList, cards, activeCardId, icon, activeIcon]);
 
   return (
-    <div id="map" style={{ height: '100%' }} ref={mapRef}></div>
+    <div id="map" data-testid="leaflet-map" style={{ height: '100%' }} ref={mapRef}></div>
   );
 }
 

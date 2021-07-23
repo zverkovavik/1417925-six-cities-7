@@ -7,7 +7,7 @@ import Header from '../../components/header/header';
 import { getAdsList } from '../../store/data/selectors';
 import MainPageEmpty from '../../components/main-page-empty/main-page-empty';
 
-function MainPage(props) {
+function MainPage() {
   const adsList = useSelector(getAdsList);
 
   return (

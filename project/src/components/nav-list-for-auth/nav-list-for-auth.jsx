@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAvatarUrl, getLogin } from '../../store/user/selectors';
 import { resetSortType } from '../../store/action';
 
-function NavListForAuth (props) {
+function NavListForAuth () {
 
   const dispatch = useDispatch();
   const login = useSelector(getLogin);

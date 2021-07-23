@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCity } from '../../store/data/selectors';
 import { resetSortType } from '../../store/action';
 
-function CitiesList(props) {
+function CitiesList() {
 
   const city = useSelector(getCity);
   const dispatch = useDispatch();

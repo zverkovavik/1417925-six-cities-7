@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../../components/footer/footer';
 
-function NotFoundScreen(props) {
+function NotFoundScreen() {
   return (
     <>
       <main style={{marginTop: '100px', textAlign: 'center' }}>

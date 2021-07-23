@@ -15,7 +15,7 @@ import { getLoadedDataStatus } from '../../store/data/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import FavoriteList from '../favorite-list/favorite-list';
 
-function App(props) {
+function App() {
 
   const isDataLoaded = useSelector(getLoadedDataStatus);
   const authorizationStatus = useSelector(getAuthorizationStatus);
@@ -33,17 +33,11 @@ function App(props) {
 
   return (
     <Switch>
-      <Route exact path={AppRoute.ROOT}>
-        <MainPage />;
-      </Route>
+      <Route exact path={AppRoute.ROOT} component={MainPage} />
       <PrivateRouteToLogin exact path={AppRoute.LOGIN} render={() => <LoginScreen />} />
       <PrivateRouteToFavorite exact path={AppRoute.FAVORITES} render={() => <FavoriteList />} />
-      <Route exact path={AppRoute.ROOM}>
-        <Room />
-      </Route>
-      <Route>
-        <NotFoundScreen />
-      </Route>
+      <Route exact path={AppRoute.ROOM} component={Room}/>
+      <Route component={NotFoundScreen} />
     </Switch>
   );
 }

@@ -53,9 +53,11 @@ describe('Async operations', () => {
   it('should make a correct API call to POST /login', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const fakeUser = {email: 'test@test.ru', password: '123456', 'avatar_url': 'img.png'};
+    const fakeUser = {email: 'test@test.ru', password: '123456', 'avatar_url': 'img.png', token: 'obndr3940657rjver'};
     const loginLoader = login(fakeUser);
     const adaptedfakeUser = { avatarUrl: 'img.png'};
+    Storage.prototype.setItem = jest.fn();
+
     apiMock
       .onPost(ApiRoute.LOGIN)
       .reply(200, fakeUser);
@@ -63,7 +65,8 @@ describe('Async operations', () => {
     return loginLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(4);
-
+        expect(Storage.prototype.setItem).toBeCalledTimes(1);
+        expect(Storage.prototype.setItem).toHaveBeenCalledWith('token', fakeUser.token);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_EMAIL,
           payload: fakeUser.email,
@@ -214,7 +217,7 @@ describe('Async operations', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const logoutLoader = logout();
-
+    Storage.prototype.removeItem = jest.fn();
     apiMock
       .onDelete(ApiRoute.LOGOUT)
       .reply(204);
@@ -223,6 +226,9 @@ describe('Async operations', () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledWith({type: ActionType.LOGOUT});
+
+        expect(Storage.prototype.removeItem).toBeCalledTimes(1);
+        expect(Storage.prototype.removeItem).toHaveBeenCalledWith('token');
       });
   });
 });

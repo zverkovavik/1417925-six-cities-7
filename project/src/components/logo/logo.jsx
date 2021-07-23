@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-function Logo(props) {
+function Logo() {
   return (
     <div className="header__left" data-testid="logo">
       <Link className="header__logo-a" to="/">

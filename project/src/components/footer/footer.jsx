@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-function FooterLogo(props) {
+function FooterLogo() {
   return (
     <footer className="footer" data-testid="footer">
       <Link className="footer__logo-link" to="/">

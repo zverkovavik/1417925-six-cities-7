@@ -9,6 +9,7 @@ describe('Reducer: user', () => {
       .toEqual({
         authorizationStatus: AuthorizationStatus.UNKNOWN,
         login: '',
+        avatarUrl: '',
       });
   });
 

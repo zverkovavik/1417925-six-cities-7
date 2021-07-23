@@ -9,7 +9,7 @@ import { changeFavoriteList } from '../../store/api-actions';
 import { Status } from '../../constants';
 
 function FavoriteCard(props) {
-  const { id, price, previewImage, title, type, rating } = props;
+  const { id, isPremium, price, previewImage, title, type, rating } = props;
   const activeCardId = useSelector(getActiveCardId);
 
   const dispatch = useDispatch();
@@ -29,6 +29,7 @@ function FavoriteCard(props) {
   return (
     <article onMouseOver={() => onCardMouseOver(id)} onMouseOut={onCardMouseOut} className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
+        {isPremium && (<div className="place-card__mark"><span>Premium</span></div>)}
         <Link to={`/offer/${activeCardId}`}>
           <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place" />
         </Link>
@@ -53,7 +54,7 @@ function FavoriteCard(props) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${activeCardId}`} href="/">{title}</Link>
+          <Link to={`/offer/${activeCardId}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -63,6 +64,7 @@ function FavoriteCard(props) {
 
 FavoriteCard.propTypes = {
   id: PropTypes.number.isRequired,
+  isPremium: PropTypes.bool.isRequired,
   previewImage: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,

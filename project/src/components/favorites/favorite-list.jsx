@@ -1,20 +1,18 @@
 import React,  { useEffect, useState }  from 'react';
 import { Link } from 'react-router-dom';
-import FooterLogo from '../../components/footer-logo/footer-logo';
-import Header from '../../components/header/header';
+import Footer from '../footer/footer';
+import Header from '../header/header';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuthorizationStatus } from '../../store/user/selectors';
 import {  getCards, getFavoriteList } from '../../store/data/selectors';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import { fetchFavoriteList } from '../../store/api-actions';
-import FavoritesEmpty from '../../components/favorite-empty/favorites-empty';
-import FavoriteCard from '../../components/favorite-card/favorite-card';
+import FavoritesEmpty from '../favorite-empty-list/favorite-empty-list';
+import FavoriteCard from '../favorite-card/favorite-card';
 import { changeCity } from '../../store/action';
 
 function Favorites(props) {
 
   const dispatch = useDispatch();
-  const authorizationStatus = useSelector(getAuthorizationStatus);
   const favoriteList = useSelector(getFavoriteList);
   const cards = useSelector(getCards);
   const [isDataLoaded, setLoadingDataStatus] = useState(false);
@@ -39,13 +37,13 @@ function Favorites(props) {
 
   return (
     <div className="page">
-      <Header authorizationStatus={authorizationStatus} />
+      <Header />
       {!favoriteList.length ? <FavoritesEmpty isError={isError}/> : (
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
+              <ul className="favorites__list" data-testid="favorite-list">
                 {set.map((city) => (
                   <li key={city} className="favorites__locations-items">
                     <div onClick={() => dispatch(changeCity(city))} className="favorites__locations locations locations--current">
@@ -74,7 +72,7 @@ function Favorites(props) {
             </section>
           </div>
         </main>)}
-      <FooterLogo />
+      <Footer />
     </div>);
 }
 

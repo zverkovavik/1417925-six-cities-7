@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveCard, resetActiveCard, redirectToRoute } from '../../store/action';
 import { getActiveCardId } from '../../store/data/selectors';
@@ -10,6 +9,7 @@ import { AuthorizationStatus, AppRoute, Status, Toast } from '../../constants';
 import { calculateRating } from '../../utils/utils';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import offerProp from '../../prop-types/offer-prop';
 
 function Card(props) {
 
@@ -43,7 +43,7 @@ function Card(props) {
 
   return (
     <article onMouseOver={() => onCardMouseOver(id)} onMouseOut={onCardMouseOut} className="cities__place-card place-card">
-      {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '' }
+      {isPremium && (<div className="place-card__mark"><span>Premium</span></div>)}
       <ToastContainer />
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${activeCardId}`}>
@@ -70,7 +70,7 @@ function Card(props) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={`/offer/${activeCardId}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -78,16 +78,6 @@ function Card(props) {
   );
 }
 
-Card.propTypes = {
-  id: PropTypes.number.isRequired,
-  isPremium: PropTypes.bool.isRequired,
-  previewImage: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-  rating: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-
-};
+Card.propTypes = offerProp;
 
 export default Card;

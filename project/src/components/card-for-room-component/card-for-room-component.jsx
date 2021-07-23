@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import offerProp from '../../prop-types/offer-prop';
 import { calculateRating } from '../../utils/utils';
 import { AuthorizationStatus, AppRoute, Status, Toast } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { getAuthorizationStatus } from '../../store/user/selectors';
 import { redirectToRoute } from '../../store/action';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-function CardInRoom(props) {
+function CardForRoomComponent(props) {
 
   const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = props;
 
@@ -33,7 +33,7 @@ function CardInRoom(props) {
 
   return (
     <article onMouseOver={() => id} className="cities__place-card place-card">
-      {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : '' }
+      {isPremium && (<div className="place-card__mark"><span>Premium</span></div>)}
       <ToastContainer />
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
@@ -60,7 +60,7 @@ function CardInRoom(props) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -68,17 +68,7 @@ function CardInRoom(props) {
   );
 }
 
-CardInRoom.propTypes = {
-  id: PropTypes.number.isRequired,
-  isPremium: PropTypes.bool.isRequired,
-  previewImage: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-  rating: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+CardForRoomComponent.propTypes = offerProp;
 
-};
-
-export default React.memo(CardInRoom);
+export default React.memo(CardForRoomComponent);
 

@@ -9,7 +9,13 @@ function SortTypeMenu(props) {
   const [ shown, setShown ] = useState(false);
 
   return (
-    <form onMouseLeave={() => setShown(false)} className="places__sorting" action="#" method="get">
+    <form
+      onMouseLeave={() => setShown(false)}
+      className="places__sorting"
+      action="#"
+      method="get"
+      data-testid="sort-menu"
+    >
       <span className="places__sorting-caption">Sort by</span>
       <span onMouseEnter={() => setShown(true)} className="places__sorting-type" tabIndex={0}>
         {sortType}

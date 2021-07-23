@@ -1,5 +1,6 @@
-import { setEmail, loadAdCards, loadOneCard, loadApartmentsNear, loadFavoriteList, loadReviews, redirectToRoute, requireAuthorization, logoutApp, updateFavoriteList } from './action';
+import { setEmail, loadAdCards, loadOneCard, loadApartmentsNear, loadFavoriteList, loadReviews, redirectToRoute, requireAuthorization, logoutApp, updateFavoriteList, setAvatarUrl } from './action';
 import { AuthorizationStatus, ApiRoute, AppRoute } from '../constants';
+import { adaptToClientData } from '../utils/adapter';
 
 export const fetchAdCardsList = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.HOTELS)
@@ -38,15 +39,21 @@ export const postComment = (id, {comment, rating}) => (dispatch, _getState, api)
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(ApiRoute.LOGIN)
-    .then(({ data }) => dispatch(setEmail(data.email)))
+    .then(({ data }) => {
+      const serverData = adaptToClientData(data);
+      dispatch(setEmail(serverData.email));
+      dispatch(setAvatarUrl(serverData.avatarUrl));
+    })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
 );
 
 export const login = ({email, password}) => (dispatch, _getState, api) => (
   api.post(ApiRoute.LOGIN, {email, password})
     .then(({ data }) => {
-      localStorage.setItem('token', data.token);
-      dispatch(setEmail(data.email));
+      const serverData = adaptToClientData(data);
+      localStorage.setItem('token', serverData.token);
+      dispatch(setEmail(serverData.email));
+      dispatch(setAvatarUrl(serverData.avatarUrl));
     })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))

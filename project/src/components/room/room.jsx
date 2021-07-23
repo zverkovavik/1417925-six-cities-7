@@ -1,12 +1,12 @@
 import React, { useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import CardInRoom from '../../components/card-for-room-component/card-for-room-component';
+import CardForRoomConmponent from '../../components/card-for-room-component/card-for-room-component';
 import Review from '../../components/review/review';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
-import { checkReviews, getDate, calculateRating } from '../../utils/utils';
+import { checkReviews, getDate, calculateRating, capitalizeFirstLetter } from '../../utils/utils';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { AuthorizationStatus } from '../../constants';
 import { setActiveCard, redirectToRoute } from '../../store/action';
@@ -69,7 +69,7 @@ function Room(props) {
 
   return (
     <div className="page">
-      <Header authorizationStatus={authorizationStatus} />
+      <Header />
       <main className="page__main page__main--property">
         <ToastContainer />
         <section className="property">
@@ -83,7 +83,7 @@ function Room(props) {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium ? <div className="property__mark"><span>Premium</span></div> : ''}
+              {isPremium && (<div className="property__mark"><span>Premium</span></div>)}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -110,7 +110,7 @@ function Room(props) {
                   {bedrooms === 1 ? '1 bedroom' : `${bedrooms} bedrooms`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {maxAdults} adults
+                  {maxAdults === 1 ? 'Max 1 adult' : `Max ${maxAdults} adults`}
                 </li>
               </ul>
               <div className="property__price">
@@ -120,7 +120,7 @@ function Room(props) {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((item) => (<li key={item} className="property__inside-item">{item}</li>))}
+                  {goods.map((item) => (<li key={item} className="property__inside-item">{capitalizeFirstLetter(item)}</li>))}
                 </ul>
               </div>
               <div className="property__host">
@@ -132,7 +132,7 @@ function Room(props) {
                   <span className="property__user-name">
                     {userName}
                   </span>
-                  {isPro ? <span className="property__user-status">Pro</span> : ''}
+                  {isPro && (<span className="property__user-status">Pro</span>)}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
@@ -147,7 +147,7 @@ function Room(props) {
                   <h2 className="reviews__title">No reviews yet</h2>}
 
                 <ul className="reviews__list">
-                  {sortedReviews.length ? sortedReviews.map((review) => (
+                  {sortedReviews.length && (sortedReviews.map((review) => (
                     <Review
                       comment = {review.comment}
                       date = {getDate(review.date)}
@@ -156,9 +156,9 @@ function Room(props) {
                       authorName = {review.user.authorName}
                       key = {review.comment + review.id}
                     />
-                  )) : ''}
+                  )))}
                 </ul>
-                { authorizationStatus === AuthorizationStatus.AUTH ? <NewCommentForm /> : ''}
+                { authorizationStatus === AuthorizationStatus.AUTH && (<NewCommentForm />)}
               </section>
             </div>
           </div>
@@ -170,8 +170,8 @@ function Room(props) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {!apartmentsNear.length ? '' : apartmentsNear.map((card) => (
-                <CardInRoom
+              {apartmentsNear.length && (apartmentsNear.map((card) => (
+                <CardForRoomConmponent
                   id = {card.id}
                   isPremium = {card.isPremium}
                   previewImage = {card.previewImage}
@@ -182,7 +182,7 @@ function Room(props) {
                   type = {card.type}
                   key = {card.title + card.id}
                 />),
-              )}
+              ))}
             </div>
           </section>
         </div>

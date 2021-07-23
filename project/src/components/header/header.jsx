@@ -3,13 +3,15 @@ import NavListLogin from '../nav-list-login/nav-list-login';
 import NavListForAuth from '../nav-list-for-auth/nav-list-for-auth';
 import { AuthorizationStatus } from '../../constants';
 import Logo from '../logo/logo';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+
 
 function Header(props) {
-  const { authorizationStatus } = props;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
-    <header className="header">
+    <header className="header" data-testid="header">
       <div className="container">
         <div className="header__wrapper">
           <Logo />
@@ -19,9 +21,5 @@ function Header(props) {
     </header>
   );
 }
-
-Header.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-};
 
 export default React.memo(Header);

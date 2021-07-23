@@ -4,3 +4,4 @@ export const getAuthorizationStatus = (state) =>  state[NameSpace.USER].authoriz
 
 export const getLogin = (state) =>  state[NameSpace.USER].login;
 
+export const getAvatarUrl = (state) => state[NameSpace.USER].avatarUrl;

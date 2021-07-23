@@ -4,7 +4,7 @@ import Card from '../card/card';
 import {  useSelector } from 'react-redux';
 import { getAdsList, getCity, getSortType } from '../../store/data/selectors';
 
-function OffersList(props) {
+function OffersList() {
 
   const city = useSelector(getCity);
   const adsList = useSelector(getAdsList);

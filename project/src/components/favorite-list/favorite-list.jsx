@@ -10,7 +10,7 @@ import FavoriteEmptyList from '../favorite-empty-list/favorite-empty-list';
 import FavoriteCard from '../favorite-card/favorite-card';
 import { changeCity } from '../../store/action';
 
-function FavoriteList(props) {
+function FavoriteList() {
 
   const dispatch = useDispatch();
   const favoriteList = useSelector(getFavoriteList);
@@ -63,7 +63,7 @@ function FavoriteList(props) {
                           rating = {card.rating}
                           title = {card.title}
                           type = {card.type}
-                          key = {card.title}
+                          key = {card.title + card.id}
                         />),
                       )}
                     </div>

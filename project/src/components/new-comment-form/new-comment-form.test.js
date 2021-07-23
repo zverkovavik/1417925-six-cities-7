@@ -26,8 +26,9 @@ describe('Component: NewCommentForm', () => {
       </Provider>);
 
     expect(screen.getByText(/Your review/i)).toBeInTheDocument();
-    expect(screen.getByRole('button')).toBeInTheDocument();
-    expect(screen.getByTestId(/post-new-comment/i)).toBeInTheDocument();
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toBeDisabled();
     expect(screen.getByText(/To submit review please make sure to set/i)).toBeInTheDocument();
 
     expect(screen.getByPlaceholderText(/Tell how was your stay, what you like and what can be improved/i)).toBeInTheDocument();

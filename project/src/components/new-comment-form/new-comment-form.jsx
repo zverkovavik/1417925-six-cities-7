@@ -20,7 +20,7 @@ const createRatingForm = (numberValue, definition) => (
     </label>
   </React.Fragment>);
 
-function NewCommentForm(props) {
+function NewCommentForm() {
 
   const { id } = useParams();
   const defaultValue = { comment: '', rating: null };

@@ -19,7 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const MAX_IMAGE_COUNT = 6;
 
-function Room(props) {
+function Room() {
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -166,26 +166,26 @@ function Room(props) {
             <Map activeCardId={id} adsList={apartmentsNear} />
           </section>
         </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {apartmentsNear.length && (apartmentsNear.map((card) => (
-                <CardForRoomConmponent
-                  id = {card.id}
-                  isPremium = {card.isPremium}
-                  previewImage = {card.previewImage}
-                  price = {card.price}
-                  isFavorite = {card.isFavorite}
-                  rating = {card.rating}
-                  title = {card.title}
-                  type = {card.type}
-                  key = {card.title + card.id}
-                />),
-              ))}
-            </div>
-          </section>
-        </div>
+        {apartmentsNear.length && (
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title">Other places in the neighbourhood</h2>
+              <div className="near-places__list places__list">
+                {apartmentsNear.map((card) => (
+                  <CardForRoomConmponent
+                    id = {card.id}
+                    isPremium = {card.isPremium}
+                    previewImage = {card.previewImage}
+                    price = {card.price}
+                    isFavorite = {card.isFavorite}
+                    rating = {card.rating}
+                    title = {card.title}
+                    type = {card.type}
+                    key = {card.title + card.id}
+                  />))}
+              </div>
+            </section>
+          </div>)}
       </main>
     </div>
   );

@@ -6,15 +6,11 @@ const REQUEST_TIMEOUT = 5000;
 const HttpCode = {
   UNAUTHORIZED: 401,
 };
-const token = localStorage.getItem('token') ?? '';
 
 export const createAPI = (onUnauthorized) => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
-    headers: {
-      'x-token': token,
-    },
   });
 
   const onSuccess = (response) => response;
@@ -29,11 +25,18 @@ export const createAPI = (onUnauthorized) => {
     throw err;
   };
 
-  const onRequest = (config) => {
-    config.headers['x-token'] = localStorage.getItem('token');
+  const onRequest = (config) =>
+    Object.assign(
+      {},
+      {
+        ...config,
+        headers: {
+          ...config.headers,
+          'x-token': localStorage.getItem('token'),
+        },
+      });
 
-    return config;
-  };
+
   api.interceptors.response.use(onSuccess, onFail);
   api.interceptors.request.use(onRequest);
 

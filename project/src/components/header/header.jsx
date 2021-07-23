@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 
 
-function Header(props) {
+function Header() {
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (

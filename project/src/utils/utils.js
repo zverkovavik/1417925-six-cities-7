@@ -1,4 +1,4 @@
-import { AuthorizationStatus, SortType } from '../constants';
+import { AuthorizationStatus } from '../constants';
 import dayjs from 'dayjs';
 
 const REVIEW_COUNT = 10;
@@ -28,24 +28,8 @@ export const checkReviews = (array) => {
 
 export const getDate = (date) => dayjs(date).format('MMMM YYYY');
 
-export const getSortData = (currentList, currentSortType, activeSortType) => {
-  const currentAdsList = currentList.slice();
-  if (currentSortType === activeSortType) {
-    return currentAdsList;
-  }
-
-  switch (activeSortType) {
-    case SortType.HIGH_TO_LOW:
-      return sortHighToLowPrice(currentAdsList);
-    case SortType.LOW_TO_HIGH:
-      return sortLowToHighPrice(currentAdsList);
-    case SortType.TOP_RATED_FIRST:
-      return sortByRating(currentAdsList);
-    default:
-      return currentAdsList;
-  }
-};
-
 export const calculateRating = (rating) => Math.round(rating) * 20;
 
 export const capitalizeFirstLetter = (string) => string[FIRST_LETTER_INDEX].toUpperCase() + string.slice(SECOND_LETTER_INDEX);
+
+export { sortByRating, sortHighToLowPrice, sortLowToHighPrice };

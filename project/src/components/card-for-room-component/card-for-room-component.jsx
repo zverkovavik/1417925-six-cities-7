@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import offerProp from '../../prop-types/offer-prop';
-import { calculateRating } from '../../utils/utils';
+import { calculateRating, capitalizeFirstLetter } from '../../utils/utils';
 import { AuthorizationStatus, AppRoute, Status, Toast } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeFavoriteList } from '../../store/api-actions';
@@ -16,7 +16,7 @@ function CardForRoomComponent(props) {
   const dispatch = useDispatch();
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
-  const onFavoriteButtonClick = () => {
+  const handleFavoriteButtonClick = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       const status = isFavorite ? Status.UNFAVORITE : Status.FAVORITE;
       dispatch(changeFavoriteList(id, status))
@@ -46,7 +46,7 @@ function CardForRoomComponent(props) {
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} onClick={onFavoriteButtonClick} type="button">
+          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} onClick={handleFavoriteButtonClick} type="button">
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>
@@ -62,7 +62,7 @@ function CardForRoomComponent(props) {
         <h2 className="place-card__name">
           <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>
     </article>
   );

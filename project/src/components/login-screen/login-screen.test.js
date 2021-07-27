@@ -27,11 +27,20 @@ describe('Component: LoginScreen', () => {
         </Router>
       </Provider>,
     );
-
-    userEvent.type(screen.getByTestId('login'), 'keks');
+    screen.getByTestId('authorization-form');
+    userEvent.type(screen.getByTestId('login'), 'test@test.com');
     userEvent.type(screen.getByTestId('password'), '123456');
 
-    expect(screen.getByDisplayValue(/keks/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(/test@test.com/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
+    const [firstLink, secondLink] = screen.queryAllByRole('link');
+    userEvent.click(firstLink);
+    userEvent.click(secondLink);
+
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent('Sign in');
+
+    expect(screen.getByText(/Amsterdam/i)).toBeInTheDocument();
   });
 });

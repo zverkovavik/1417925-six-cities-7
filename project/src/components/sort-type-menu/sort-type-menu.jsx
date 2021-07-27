@@ -17,7 +17,7 @@ function SortTypeMenu(props) {
       data-testid="sort-menu"
     >
       <span className="places__sorting-caption">Sort by</span>
-      <span onMouseEnter={() => setShown(true)} className="places__sorting-type" tabIndex={0}>
+      <span onClick={() => setShown(true)} className="places__sorting-type" tabIndex={0}>
         {sortType}
         <svg className="places__sorting-arrow" width={7} height={4}>
           <use xlinkHref="#icon-arrow-select" />

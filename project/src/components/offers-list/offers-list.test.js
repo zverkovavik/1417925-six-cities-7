@@ -12,6 +12,9 @@ let store = null;
 const mockStore = configureStore({});
 const TEST_CARD =  {
   id: 1,
+  city: {
+    name: 'London',
+  },
   'isFavorite': true,
   'isPremium': false,
   'previewImage': 'img/room.jpg',
@@ -33,7 +36,7 @@ describe('Component: OffersList', () => {
       },
       DATA: {
         city: 'London',
-        adsList: [TEST_CARD],
+        cards: [TEST_CARD],
         sortType: 'Popular',
       },
     });

@@ -6,7 +6,7 @@ import { getActiveCardId } from '../../store/data/selectors';
 import { changeFavoriteList } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user/selectors';
 import { AuthorizationStatus, AppRoute, Status, Toast } from '../../constants';
-import { calculateRating } from '../../utils/utils';
+import { calculateRating, capitalizeFirstLetter } from '../../utils/utils';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import offerProp from '../../prop-types/offer-prop';
@@ -18,15 +18,15 @@ function Card(props) {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
-  const onCardMouseOver = (cardId) => {
+  const handleCardMouseOver = (cardId) => {
     dispatch(setActiveCard(cardId));
   };
 
-  const onCardMouseOut = () => {
+  const handleCardMouseOut = () => {
     dispatch(resetActiveCard());
   };
 
-  const onFavoriteButtonClick = () => {
+  const handleFavoriteButtonClick = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       const status = isFavorite ? Status.UNFAVORITE : Status.FAVORITE;
       dispatch(changeFavoriteList(id, status))
@@ -42,7 +42,7 @@ function Card(props) {
   };
 
   return (
-    <article onMouseOver={() => onCardMouseOver(id)} onMouseOut={onCardMouseOut} className="cities__place-card place-card">
+    <article onMouseOver={() => handleCardMouseOver(id)} onMouseOut={handleCardMouseOut} className="cities__place-card place-card">
       {isPremium && (<div className="place-card__mark"><span>Premium</span></div>)}
       <ToastContainer />
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -56,7 +56,7 @@ function Card(props) {
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} onClick={onFavoriteButtonClick} type="button">
+          <button className={isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button  button'} onClick={handleFavoriteButtonClick} type="button">
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>
@@ -72,7 +72,7 @@ function Card(props) {
         <h2 className="place-card__name">
           <Link to={`/offer/${activeCardId}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>
     </article>
   );

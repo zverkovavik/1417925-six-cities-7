@@ -4,12 +4,12 @@ import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { useSelector } from 'react-redux';
 import Header from '../../components/header/header';
-import { getAdsList } from '../../store/data/selectors';
+import { getSortData } from '../../store/data/selectors';
 import MainPageEmpty from '../../components/main-page-empty/main-page-empty';
 
 function MainPage() {
-  const adsList = useSelector(getAdsList);
 
+  const adsList = useSelector(getSortData);
   return (
     <div>
       <div style={{ display: 'none' }}>

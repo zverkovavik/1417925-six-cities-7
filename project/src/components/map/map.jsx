@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { getCardWithTheSameId } from '../../utils/utils';
 import offersInMap from '../../prop-types/offers-used-in-map';
 import { getActiveCardId } from '../../store/data/selectors';
-import { getCards, filterCardsByCurrentCity, getCity } from '../../store/data/selectors';
+import { getCards, filterCardsByCurrentCity } from '../../store/data/selectors';
 
 const FIRST_ARRAY_ELEMENT = 0;
 const MarkerUrl = {
@@ -19,23 +19,22 @@ function Map(props) {
 
   const activeCardId = useSelector(getActiveCardId);
   const cards = useSelector(getCards);
-  const chosenCity = useSelector(getCity);
-
-  const city = (filterCardsByCurrentCity(cards, chosenCity))[FIRST_ARRAY_ELEMENT];
+  const apartmentAds = useSelector(filterCardsByCurrentCity);
+  const city = apartmentAds[FIRST_ARRAY_ELEMENT];
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   const icon = leaflet.icon({
     iconUrl: MarkerUrl.MARKER_URL,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
+    iconSize: [27, 39],
+    iconAnchor: [13, 39],
   });
 
   const activeIcon = leaflet.icon({
     iconUrl: MarkerUrl.ACTIVE_MARKER_URL,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
+    iconSize: [27, 39],
+    iconAnchor: [13, 39],
   });
 
   useEffect(() => {

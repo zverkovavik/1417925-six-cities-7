@@ -36,7 +36,7 @@ function NewCommentForm() {
     newComment.comment.length <= MAX_COMMENT_LENGTH;
 
 
-  const onFormSubmit = (evt) => {
+  const handleFormSubmit = (evt) => {
     evt.preventDefault();
     setDisabled(true);
     setSubmitting(true);
@@ -62,7 +62,7 @@ function NewCommentForm() {
   };
 
   return (
-    <form ref={formRef} onSubmit={onFormSubmit} className="reviews__form form" action="#" method="post" disabled={isSubmitting}>
+    <form ref={formRef} onSubmit={handleFormSubmit} className="reviews__form form" action="#" method="post" disabled={isSubmitting}>
       <ToastContainer />
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div onClick={(evt) => setValue({ ...newComment, rating: evt.target.value})} className="reviews__rating-form form__rating" data-testid="submit-new-comment">

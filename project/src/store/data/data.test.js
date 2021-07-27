@@ -5,7 +5,6 @@ import { adaptToClient, adaptToClientCardsArray, adaptToClientReviewsArray } fro
 const initialState = {
   city: 'Paris',
   cards: [],
-  adsList: [],
   isDataLoaded: false,
   activeCard: null,
   activeCardId: 0,
@@ -129,22 +128,21 @@ describe('Reducer: data', () => {
   });
 
   it('should update cards by load cards', () => {
-    const state = {city: 'Amsterdam', cards: [], adsList: [], isDataLoaded: false};
+    const state = {city: 'Amsterdam', cards: [], isDataLoaded: false};
     const loadAdCardsAction = {
       type: ActionType.LOAD_AD_CARDS,
       payload: TEST_CARD_ARRAY,
     };
 
     expect(data(state, loadAdCardsAction))
-      .toEqual({city: 'Amsterdam', cards: adaptToClientCardsArray(TEST_CARD_ARRAY), adsList: adaptToClientCardsArray([AMSTERDAM_TEST_CARD]), isDataLoaded: true});
+      .toEqual({city: 'Amsterdam', cards: adaptToClientCardsArray(TEST_CARD_ARRAY), isDataLoaded: true});
   });
 
 
-  it('should update city and return filtered adsList by chosen city and initial sort type', () => {
+  it('should update city name', () => {
     const state = {
       city: 'Paris',
       cards: adaptToClientCardsArray(TEST_CARD_ARRAY),
-      adsList: adaptToClientCardsArray([FIRST_PARIS_TEST_CARD, SECOND_PARIS_TEST_CARD]),
       sortType: 'Price: high to low',
     };
 
@@ -157,8 +155,7 @@ describe('Reducer: data', () => {
       .toEqual({
         city: 'Amsterdam',
         cards: adaptToClientCardsArray(TEST_CARD_ARRAY),
-        adsList: adaptToClientCardsArray([AMSTERDAM_TEST_CARD]),
-        sortType: 'Popular',
+        sortType: 'Price: high to low',
       });
   });
 
@@ -241,7 +238,6 @@ describe('Reducer: data', () => {
     const state = {
       city: 'Paris',
       cards: [],
-      adsList: [],
       sortType: 'Popular',
     };
 
@@ -255,7 +251,6 @@ describe('Reducer: data', () => {
         city: 'Paris',
         sortType: 'Price: high to low',
         cards: [],
-        adsList: [],
       });
   });
 

@@ -27,13 +27,7 @@ function Room() {
   useEffect(() => {
     dispatch(fetchOneAdCard(id));
     dispatch(fetchApartmentsNear(id));
-    dispatch(fetchCommentsList(id))
-      .catch(() => {
-        toast.error('Cant load reviews for this apartments', {
-          position: Toast.POSITION,
-          autoClose: Toast.AUTO_CLOSE_TIME,
-        });
-      });
+    dispatch(fetchCommentsList(id));
     dispatch(setActiveCard(Number(id)));
   }, [id]);
 
@@ -51,7 +45,7 @@ function Room() {
   const sortedReviews = checkReviews(reviews);
   const { isPremium, images, price, isFavorite, rating, title, type, bedrooms, description, goods, maxAdults, host: { avatarUrl, isPro, userName }} = activeCard;
 
-  const onFavoriteButtonClick = () => {
+  const handleFavoriteButtonClick = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       const status = isFavorite ? Status.UNFAVORITE : Status.FAVORITE;
       dispatch(changeFavoriteList(id, status))
@@ -88,7 +82,7 @@ function Room() {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button onClick={onFavoriteButtonClick} className={isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button'} type="button">
+                <button onClick={handleFavoriteButtonClick} className={isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button'} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -104,7 +98,7 @@ function Room() {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {capitalizeFirstLetter(type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms === 1 ? '1 bedroom' : `${bedrooms} bedrooms`}

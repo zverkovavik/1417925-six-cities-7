@@ -1,17 +1,17 @@
 import React from 'react';
 import { City } from '../../constants';
-import { changeCity } from '../../store/action';
+import { changeCity, setSortType } from '../../store/action';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCity } from '../../store/data/selectors';
-import { resetSortType } from '../../store/action';
+import { getCity, getSortType } from '../../store/data/selectors';
 
 function CitiesList() {
 
   const city = useSelector(getCity);
+  const sortType = useSelector(getSortType);
   const dispatch = useDispatch();
-  const onCityClick = (chosenCity) => {
+  const handleCityClick = (chosenCity) => {
     dispatch(changeCity(chosenCity));
-    dispatch(resetSortType());
+    dispatch(setSortType(sortType));
   };
 
   return (
@@ -19,7 +19,7 @@ function CitiesList() {
       <ul className="locations__list tabs__list" data-testid="cities-list">
         {Object.values(City).map((element) => (
           <li className="locations__item" key={element}>
-            <p onClick={() => onCityClick(element)} className={element === city ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}>
+            <p onClick={() => handleCityClick(element)} className={element === city ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}>
               <span>{element}</span>
             </p>
           </li>

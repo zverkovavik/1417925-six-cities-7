@@ -26,7 +26,7 @@ function LoginScreen() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const onPasswordInput = () => {
+  const handlePasswordInput = () => {
     if ((passwordRef.current.value).slice(0,1) === ' ') {
       passwordRef.current.value = '';
       toast.error(Toast.SPACE_PASSWORD_ERROR, {
@@ -74,7 +74,7 @@ function LoginScreen() {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form" action="#" method="post" data-testid="authorization-form">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -91,7 +91,7 @@ function LoginScreen() {
                 <label className="visually-hidden">Password</label>
                 <input
                   ref={passwordRef}
-                  onInput={onPasswordInput}
+                  onInput={handlePasswordInput}
                   className="login__input form__input"
                   type="password" name="password"
                   placeholder="Password"

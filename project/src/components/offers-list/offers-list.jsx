@@ -1,14 +1,14 @@
 import React from 'react';
 import SortTypeMenu from '../sort-type-menu/sort-type-menu';
 import Card from '../card/card';
-import {  useSelector } from 'react-redux';
-import { getAdsList, getCity, getSortType } from '../../store/data/selectors';
+import { useSelector } from 'react-redux';
+import { getCity, getSortType, getSortData } from '../../store/data/selectors';
 
 function OffersList() {
 
   const city = useSelector(getCity);
-  const adsList = useSelector(getAdsList);
   const sortType = useSelector(getSortType);
+  const adsList = useSelector(getSortData);
 
   return (
     <section className="cities__places places" data-testid="offers-list">
@@ -34,4 +34,4 @@ function OffersList() {
   );
 }
 
-export default React.memo(OffersList);
+export default OffersList;

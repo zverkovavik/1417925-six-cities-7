@@ -24,7 +24,7 @@ describe('Component: MainPage', () => {
         authorizationStatus: AuthorizationStatus.AUTH,
       },
       DATA: {
-        adsList: [],
+        cards: [],
         city: 'Paris',
       },
     });

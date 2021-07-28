@@ -6,13 +6,14 @@ import { getSortType } from '../../store/data/selectors';
 
 function SortTypeMenuElement(props) {
 
-  const { element} = props;
+  const { element, handleSortTypeElementClick} = props;
 
   const sortType = useSelector(getSortType);
 
   const dispatch = useDispatch();
   const handleSortTypeClick = (sortTypeName) => {
     dispatch(setSortType(sortTypeName));
+    handleSortTypeElementClick();
   };
 
   return (
@@ -22,6 +23,7 @@ function SortTypeMenuElement(props) {
 
 SortTypeMenuElement.propTypes = {
   element: PropTypes.string.isRequired,
+  handleSortTypeElementClick: PropTypes.func.isRequired,
 };
 
 export default SortTypeMenuElement;

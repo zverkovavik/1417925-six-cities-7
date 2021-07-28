@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 let history = null;
+let handleSortTypeElementClick = null;
 const mockStore = configureStore({});
 
 const SortType = {
@@ -19,6 +20,7 @@ const SortType = {
 describe('Component: SortTypeMenuElement', () => {
   beforeAll(() => {
     history = createMemoryHistory();
+    handleSortTypeElementClick = jest.fn();
   });
 
   it('should render correctly popular sort element', () => {
@@ -31,7 +33,10 @@ describe('Component: SortTypeMenuElement', () => {
       })}
       >
         <Router history={history}>
-          <SortTypeMenuElement element={element}/>
+          <SortTypeMenuElement
+            element={element}
+            handleSortTypeElementClick={handleSortTypeElementClick}
+          />
         </Router>
       </Provider>);
 
@@ -48,7 +53,10 @@ describe('Component: SortTypeMenuElement', () => {
       })}
       >
         <Router history={history}>
-          <SortTypeMenuElement element={element}/>
+          <SortTypeMenuElement
+            element={element}
+            handleSortTypeElementClick={handleSortTypeElementClick}
+          />
         </Router>
       </Provider>);
 
@@ -65,7 +73,10 @@ describe('Component: SortTypeMenuElement', () => {
       })}
       >
         <Router history={history}>
-          <SortTypeMenuElement element={element}/>
+          <SortTypeMenuElement
+            element={element}
+            handleSortTypeElementClick={handleSortTypeElementClick}
+          />
         </Router>
       </Provider>);
 

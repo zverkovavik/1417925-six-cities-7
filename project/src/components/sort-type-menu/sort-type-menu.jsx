@@ -24,7 +24,7 @@ function SortTypeMenu(props) {
       method="get"
       data-testid="sort-menu"
     >
-      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-caption">Sort by </span>
       <span onClick={handleSortTypeTitleClick} className="places__sorting-type" tabIndex={0} data-testid="sort-type-title">
         {sortType}
         <svg className="places__sorting-arrow" width={7} height={4}>

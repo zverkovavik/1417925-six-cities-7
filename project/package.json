@@ -48,7 +48,7 @@
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^11.2.0",
     "@testing-library/react-hooks": "^7.0.2",
-    "@testing-library/user-event": "^12.8.0",
+    "@testing-library/user-event": "^14.1.0",
     "axios-mock-adapter": "^1.20.0",
     "eslint-config-htmlacademy": "^4.0.1",
     "redux-devtools-extension": "^2.13.9",

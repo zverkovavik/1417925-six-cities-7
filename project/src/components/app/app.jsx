@@ -16,14 +16,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import FavoriteList from '../favorite-list/favorite-list';
 
 function App() {
-
   const isDataLoaded = useSelector(getLoadedDataStatus);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(init());
-  }, []);
+  });
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

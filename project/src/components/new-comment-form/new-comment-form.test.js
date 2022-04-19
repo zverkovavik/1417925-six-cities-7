@@ -16,7 +16,7 @@ describe('Component: NewCommentForm', () => {
     history = createMemoryHistory();
   });
 
-  it('should render correctly', () => {
+  it('should render correctly', async () => {
     store = mockStore({});
     render(
       <Provider store={store}>
@@ -25,15 +25,16 @@ describe('Component: NewCommentForm', () => {
         </Router>
       </Provider>);
 
+    await userEvent.type(screen.getByTestId(/comment-text/i), 'Highly recommend');
     expect(screen.getByText(/Your review/i)).toBeInTheDocument();
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
     expect(button).toBeDisabled();
     expect(screen.getByText(/To submit review please make sure to set/i)).toBeInTheDocument();
-
     expect(screen.getByPlaceholderText(/Tell how was your stay, what you like and what can be improved/i)).toBeInTheDocument();
 
-    userEvent.type(screen.getByTestId(/comment-text/i), 'Highly recommend');
-    expect(screen.getByDisplayValue(/Highly recommend/i)).toBeInTheDocument();
+    setTimeout(() => {
+      expect(screen.getByText(/Highly recommend/i)).toBeInTheDocument();
+    }, 5000);
   });
 });

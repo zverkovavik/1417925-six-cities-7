@@ -11,9 +11,7 @@ import { AuthorizationStatus } from './constants';
 import { redirect } from './store/middlewares/redirect';
 import browserHistory from './browser-history';
 
-const api = createAPI(
-  () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
-);
+const api = createAPI();
 
 const store = configureStore({
   reducer: rootReducer,
@@ -24,6 +22,8 @@ const store = configureStore({
       },
     }).concat(redirect),
 });
+
+store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
 
 ReactDOM.render(
   <React.StrictMode>

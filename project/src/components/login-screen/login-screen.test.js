@@ -17,7 +17,7 @@ describe('Component: LoginScreen', () => {
     store = mockStore({});
   });
 
-  it('should render "LoginScreen" when user navigate to "login" url', () => {
+  it('should render "LoginScreen" when user navigate to "login" url', async () => {
     history.push('/login');
 
     render(
@@ -28,15 +28,15 @@ describe('Component: LoginScreen', () => {
       </Provider>,
     );
     screen.getByTestId('authorization-form');
-    userEvent.type(screen.getByTestId('login'), 'test@test.com');
-    userEvent.type(screen.getByTestId('password'), '123456');
+    await userEvent.type(screen.getByTestId('login'), 'test@test.com');
+    await userEvent.type(screen.getByTestId('password'), '123456');
 
-    expect(screen.getByDisplayValue(/test@test.com/i)).toBeInTheDocument();
-    expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
     const [firstLink, secondLink] = screen.queryAllByRole('link');
     userEvent.click(firstLink);
     userEvent.click(secondLink);
 
+    expect(screen.getByDisplayValue(/test@test.com/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent('Sign in');

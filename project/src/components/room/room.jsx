@@ -1,6 +1,6 @@
 import React, { useEffect }  from 'react';
 import { useParams } from 'react-router-dom';
-import CardForRoomConmponent from '../../components/card-for-room-component/card-for-room-component';
+import CardForRoomComponent from '../../components/card-for-room-component/card-for-room-component';
 import Review from '../../components/review/review';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -163,10 +163,10 @@ function Room() {
         {apartmentsNear.length && (
           <div className="container">
             <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
+              <h2 className="near-places__title">Other places in the neighborhood</h2>
               <div className="near-places__list places__list">
                 {apartmentsNear.map((card) => (
-                  <CardForRoomConmponent
+                  <CardForRoomComponent
                     id = {card.id}
                     isPremium = {card.isPremium}
                     previewImage = {card.previewImage}

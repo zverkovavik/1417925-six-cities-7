@@ -73,7 +73,7 @@ const TEST_CARD = {
 
 const TEST_COMMENT = {
   id: 2,
-  comment: 'Highly recommend, wonderfull place with unbelievable view',
+  comment: 'Highly recommend, wonderful place with unbelievable view',
   date: '2019-05-08T14:13:56.569Z',
   rating: 5,
   user: {
@@ -166,13 +166,13 @@ describe('Component: Room', () => {
     expect(screen.getByText(/Wood and stone place/i)).toBeInTheDocument();
     expect(screen.getByText(/To bookmarks/i)).toBeInTheDocument();
     expect(screen.getByText(/Private room/i)).toBeInTheDocument();
-    expect(screen.getByText(/Highly recommend, wonderfull place with unbelievable view/i)).toBeInTheDocument();
+    expect(screen.getByText(/Highly recommend, wonderful place with unbelievable view/i)).toBeInTheDocument();
     expect(screen.getByText(/Alesha/i)).toBeInTheDocument();
     expect(screen.getByText(/May/i)).toBeInTheDocument();
     expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
   });
 
-  it('should render correctly if user logged in', () => {
+  it('should render correctly if user logged in', async () => {
     store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,
@@ -192,15 +192,15 @@ describe('Component: Room', () => {
         </Router>
       </Provider>);
 
+    await userEvent.type(screen.getByTestId(/comment-text/i), 'Highly recommend');
     expect(screen.getByText(/Wood and stone place/i)).toBeInTheDocument();
     expect(screen.getByText(/To bookmarks/i)).toBeInTheDocument();
     expect(screen.getByText(/Private room/i)).toBeInTheDocument();
-    expect(screen.getByText(/Highly recommend, wonderfull place with unbelievable view/i)).toBeInTheDocument();
+    expect(screen.getByText(/Highly recommend, wonderful place with unbelievable view/i)).toBeInTheDocument();
     expect(screen.getByText(/Alesha/i)).toBeInTheDocument();
     expect(screen.getByText(/May/i)).toBeInTheDocument();
     expect(screen.getByTestId(/leaflet-map/i)).toBeInTheDocument();
-    userEvent.type(screen.getByTestId(/comment-text/i), 'Highly recommend');
-    expect(screen.getByDisplayValue(/Highly recommend/i)).toBeInTheDocument();
+    expect(screen.getByText(/Highly recommend/i)).toBeInTheDocument();
   });
 
   it('should render correctly if we have apartments near', () => {
@@ -223,7 +223,7 @@ describe('Component: Room', () => {
         </Router>
       </Provider>);
 
-    expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
+    expect(screen.getByText(/Other places in the neighborhood/i)).toBeInTheDocument();
     expect(screen.getByText(/Exciting memories for you/i)).toBeInTheDocument();
     expect(screen.getByText(/1000/i)).toBeInTheDocument();
   });

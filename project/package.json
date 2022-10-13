@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
-    "axios": "^0.27.2",
+    "axios": "^1.1.2",
     "dayjs": "1.11.5",
     "history": "^4.10.1",
     "leaflet": "1.9.2",
